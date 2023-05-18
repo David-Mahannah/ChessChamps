@@ -173,9 +173,9 @@ int _parseChessNotation(char * str, int * x_i, int * y_i, int * x_f, int * y_f, 
 	int out;
 
 	*x_i = str[1] - 'a';
-	*y_i = str[2] - '0';
-	*x_f = str[4] - 'a';
-	*y_f = str[5] - '0';
+	*y_i = str[2] - '1';
+	*x_f = str[3] - 'a';
+	*y_f = str[4] - '1';
 
 	if (str[0] == 'N') {
 		out = KNIGHT_MOVE;

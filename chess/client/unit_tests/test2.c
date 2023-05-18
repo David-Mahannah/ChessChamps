@@ -14,13 +14,13 @@ void test_parseChessNotation(void **state)
 	int x_i, y_i, x_f, y_f;
 
 	/* Knight Move */
-	char * knight_moves[5] = {"b1c3", "g8f6", "e5d3", "d2b3", "f3h4"};
+	char * knight_moves[5] = {"Nb1c3", "Ng8f6", "Ne5d3", "Nd2b3", "Nf3h4"};
 	int knight_expected[5][4] = {
-    	{1, 7, 2, 5}, // b1 to c3
-    	{6, 0, 5, 2}, // g8 to f6
-    	{4, 3, 3, 4}, // e5 to d3
-    	{3, 6, 1, 5}, // d2 to b3
-    	{5, 5, 7, 4}  // f3 to h4
+    	{1, 0, 2, 2}, // b1 to c3
+    	{6, 7, 5, 5}, // g8 to f6
+    	{4, 4, 3, 2}, // e5 to d3
+    	{3, 1, 1, 2}, // d2 to b3
+    	{5, 2, 7, 3}  // f3 to h4
 	};
 
 	for (int i = 0; i < 5; i++)
@@ -41,7 +41,7 @@ void test_parseChessNotation(void **state)
 	}
 	
 	/* Bishop Move */	
-	char * bishop_moves[5] = {"c1h6", "e4a8", "d7h3", "b2g7", "f3c6"};
+	char * bishop_moves[5] = {"Bc1h6", "Be4a8", "Bd7h3", "Bb2g7", "Bf3c6"};
 	int bishop_expected[5][4] = {
     	{2, 7, 7, 2}, // c1 to h6
     	{4, 4, 0, 0}, // e4 to a8
@@ -52,14 +52,14 @@ void test_parseChessNotation(void **state)
 
 	for (int i = 0; i < 5; i++)
 	{
-		result=_parseChessNotation(knight_moves[i], &x_i, &y_i, &x_f, &y_f, WHITE);
+		result=_parseChessNotation(bishop_moves[i], &x_i, &y_i, &x_f, &y_f, WHITE);
 		assert_int_equal(result, BISHOP_MOVE);
 		assert_int_equal(x_i, bishop_expected[i][0]);
 		assert_int_equal(y_i, bishop_expected[i][1]);
 		assert_int_equal(x_f, bishop_expected[i][2]);
 		assert_int_equal(y_f, bishop_expected[i][3]);
 
-		result=_parseChessNotation(knight_moves[i], &x_i, &y_i, &x_f, &y_f, BLACK);
+		result=_parseChessNotation(bishop_moves[i], &x_i, &y_i, &x_f, &y_f, BLACK);
 
 		assert_int_equal(x_i, bishop_expected[i][0]);
 		assert_int_equal(y_i, bishop_expected[i][1]);
@@ -69,7 +69,7 @@ void test_parseChessNotation(void **state)
 	}
 
 	/* Rook Move */	
-	char * rook_moves[5] = {"a1a5", "h1h6", "d3d7", "e2b2", "f3f7"};
+	char * rook_moves[5] = {"Ra1a5", "Rh1h6", "Rd3d7", "Re2b2", "Rf3f7"};
 	int rook_expected[5][4] = {
     	{0, 7, 0, 3}, // a1 to a5
     	{7, 7, 7, 2}, // h1 to h6
@@ -96,7 +96,7 @@ void test_parseChessNotation(void **state)
 	}
 
 	/* Queen Move */
-	char * queen_moves[5] = {"d1d5", "h1e4", "b6f6", "e5b8", "f3c6"};
+	char * queen_moves[5] = {"Qd1d5", "Qh1e4", "Qb6f6", "Qe5b8", "Qf3c6"};
 	int queen_expected[5][4] = {
     	{3, 7, 3, 3}, // d1 to d5
     	{7, 7, 4, 4}, // h1 to e4
@@ -123,7 +123,7 @@ void test_parseChessNotation(void **state)
 	}
 
 	/* King Move */
-	char * king_moves[5] = {"e1d2", "e1f2", "e1e2", "e1f1", "e1d1"};
+	char * king_moves[5] = {"Ke1d2", "Ke1f2", "Ke1e2", "Ke1f1", "Ke1d1"};
 	int king_expected[5][4] = {
 	    {4, 7, 3, 6}, // e1 to d2
     	{4, 7, 5, 6}, // e1 to f2
@@ -153,7 +153,7 @@ void test_parseChessNotation(void **state)
 	result=_parseChessNotation("O-O-O", &x_i, &y_i, &x_f, &y_f, WHITE);
 	assert_int_equal(result, LONG_CASTLE);
 	assert_int_equal(x_i, -1);
-	assert_int_equal(y_i, -1;
+	assert_int_equal(y_i, -1);
 	assert_int_equal(x_f, -1);
 	assert_int_equal(y_f, -1);
 

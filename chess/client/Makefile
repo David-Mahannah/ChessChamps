@@ -29,7 +29,7 @@ $(TARGET):
 	@echo "*** BUILD COMPLETE ***"
 
 test:
-	$(CC) -o bin/$(TEST_TARGET) unit_tests/main.c $(SRC_DIR)/chess.c $(TEST_LIBS)
+	$(CC) -o bin/$(TEST_TARGET) unit_tests/main.c unit_tests/test1.c unit_tests/test2.c $(SRC_DIR)/chess.c $(TEST_LIBS)
 	@./bin/test
 
 install: $(TARGET)
