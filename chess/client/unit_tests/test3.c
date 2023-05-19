@@ -6,7 +6,7 @@
 #include "../src/chess.h"
 #include "tests.h"
 
-void test_parseChessNotation(void **state)
+void test_isValidMove(void **state)
 {
 	(void) state;
 	

@@ -55,7 +55,7 @@ char _getPieceAt(board_t b, int x, int y);
 
 // Return 1 if move is valid
 // 		  0 if move is invalid
-int _isValidMove(board_t b, int i, int j, int x, int y, int move_type);
+int _isValidMove(board_t b, int i, int j, int x, int y, int move_type, side_t side);
 
 // Return 0 if not in check
 // Return 1 if in check

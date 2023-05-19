@@ -4,10 +4,14 @@
 #include <stdlib.h>
 #include <wchar.h>
 #include <locale.h>
+#include <ctype.h>
+
+static int rook_moved = 0;
+static int king_moved = 0;
 
 void resetBoard(board_t board)
 {
-// Set up the white pieces
+	// Set up the white pieces
     board[0][0] = 'R';
     board[0][1] = 'N';
     board[0][2] = 'B';
@@ -82,17 +86,23 @@ void printBoard(board_t board, side_t side)
 
 char _move(board_t b, int i, int j, int x, int y)
 {
-	char temp = b[8-y][x];
-	b[8-y][x] = b[8-j][i];
-	b[8-j][i] = '.';
+	char temp = b[7-y][x];
+	b[7-y][x] = b[7-j][i];
+	b[7-j][i] = '.';
 	return temp;
 }
 
 
 
-char _removePiece()
+char _removePiece(board_t b, int i, int j)
 {
-	return 'a';
+	if (b[7-j][i] == '.')
+	{
+		return '.';
+	}
+	char temp = b[7-j][i];
+	b[7-j][i] = ' ';
+	return temp;
 }
 
 char _getPieceAt(board_t b, int x, int y)
@@ -101,7 +111,7 @@ char _getPieceAt(board_t b, int x, int y)
 }
 
 
-int _isValidMove(board_t b, int x_i, int y_i, int x_f, int y_f, int move_type)
+int _isValidMove(board_t b, int x_i, int y_i, int x_f, int y_f, int move_type, side_t side)
 {
 	// Out of bounds?
 	if (x_i < 0 || x_i > 7 || 
@@ -112,14 +122,51 @@ int _isValidMove(board_t b, int x_i, int y_i, int x_f, int y_f, int move_type)
 		return 0;
 	}
 
+	if ((isupper(b[7-y_f][x_f]) && isupper(b[7-y_i][x_i])) || (islower(b[7-y_f][x_f]) && islower(b[7-y_i][x_i])))
+	{
+		return 0;
+	}
+
 	// Individual piece checks
 	if (move_type == LONG_CASTLE)
 	{
-		return 1;
+		if (side == WHITE)
+		{
+			if (b[7-0][3] != '.' ||
+				b[7-0][2] != '.' ||
+				b[7-0][1] != '.' ||
+				b[7-0][0] != 'r')
+			{
+				return 1;
+			}
+		} else {
+			if (b[7-7][3] != '.' ||
+				b[7-7][2] != '.' ||
+				b[7-7][1] != '.' ||
+				b[7-7][0] != 'R')
+			{
+				return 1;
+			}
+		}
 	} 
 	else if (move_type == SHORT_CASTLE)
 	{
-		return 1;
+		if (side == WHITE)
+		{
+			if (b[7-0][6] != '.' ||
+				b[7-0][5] != '.' ||
+				b[7-0][7] != 'r')
+			{
+				return 1;
+			}
+		} else {
+			if (b[7-7][6] != '.' ||
+				b[7-7][5] != '.' ||
+				b[7-7][7] != 'R')
+			{
+				return 1;
+			}
+		}
 	} 
 	else if (move_type == KNIGHT_MOVE) 
 	{
@@ -140,6 +187,22 @@ int _isValidMove(board_t b, int x_i, int y_i, int x_f, int y_f, int move_type)
 	{
 		if (abs(x_f - x_i) == abs(y_f - y_i))
 		{
+			int dx = (x_f > x_i) ? 1 : -1;
+			int dy = (y_f > y_i) ? 1 : -1;
+
+			x_i += dx;
+			y_i += dy;
+
+			while (x_i != x_f && y_i != y_f)
+			{
+				if (b[7-y_i][x_i] != '.')
+				{
+					return 0;
+				}
+
+				x_i += dx;
+				y_i += dy;
+			}
 			return 1;
 		}
 		return 0;
@@ -162,7 +225,7 @@ int _isValidMove(board_t b, int x_i, int y_i, int x_f, int y_f, int move_type)
 	}
 	else
 	{
-		return 0;
+		return 1;
 	}
 }
 
@@ -187,15 +250,42 @@ int _parseChessNotation(char * str, int * x_i, int * y_i, int * x_f, int * y_f, 
 		out = QUEEN_MOVE;
 	} else if (str[0] == 'K') {
 		out = KING_MOVE;
-	} else if (strcmp(str, "O-O") == 0) {
-		out = LONG_CASTLE;
-	} else if (strcmp(str, "O-O-O") == 0) {
+	} else if (strncmp(str, "0-0", 3) == 0) {
 		out = SHORT_CASTLE;
+		printf("Short castle!\n");
+		if (side == WHITE)
+		{
+			*x_i = 4;
+			*y_i = 0;
+			*x_f = 6;
+			*y_f = 0;
+		} else {
+			*x_i = 4;
+			*y_i = 7;
+			*x_f = 6;
+			*y_f = 7;
+		}
+	} else if (strncmp(str, "0-0-0", 5) == 0) {
+		out = LONG_CASTLE;
+		if (side == WHITE)
+		{
+			*x_i = 4;
+			*y_i = 0;
+			*x_f = 2;
+			*y_f = 0;
+		} else {
+			*x_i = 4;
+			*y_i = 7;
+			*x_f = 2;
+			*y_f = 7;
+		}
 	} else {
+		printf("Pawn move\n");
 		*x_i = str[0] - 'a';
 		*y_i = str[1] - '1';
 		*x_f = str[2] - 'a';
 		*y_f = str[3] - '1';
+		printf("%d, %d, %d, %d\n", *x_i, *y_i, *x_f, *y_f);
 		out = PAWN_MOVE;
 	}	
 	return out;
@@ -211,15 +301,39 @@ int move(board_t b, char * str, int * checkstatus, side_t side)
 	int x_i, y_i, x_f, y_f;
 
 	int parsed_move = _parseChessNotation(str, &x_i, &y_i, &x_f, &y_f, side);	
-	if (_isValidMove(b, x_i, y_i, x_f, y_f, parsed_move) == 0)
+	if (_isValidMove(b, x_i, y_i, x_f, y_f, parsed_move, side) == 0)
 	{
+		printf("invalid move\n"); 
 		return (char) 0;
 	}
 
-	char taken = _removePiece(x_f, y_f);
+	char taken = _removePiece(b, x_f, y_f);
+	printf("removed peice: %c\n", taken);
+
+	printf("Moving piece to %d, %d, %d, %d\n", x_i, y_i, x_f, y_f);
+	
+	if (parsed_move == SHORT_CASTLE)
+	{
+		if (side == WHITE)
+		{
+			_move(b, 7, 0, 5, 0);
+		} else {
+			_move(b, 7, 7, 5, 7);
+		}
+	}
+
+	if (parsed_move == LONG_CASTLE)
+	{
+		if (side == WHITE)
+		{
+			_move(b, 0, 0, 3, 0);
+		} else {
+			_move(b, 0, 7, 3, 7);
+		}
+	}
+
 	_move(b, x_i, y_i, x_f, y_f);
 	
 	int check_stat = _getCheckStatus(b);
-	
 	return taken;
 }
