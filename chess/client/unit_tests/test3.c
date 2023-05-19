@@ -13,6 +13,15 @@ void test_isValidMove(void **state)
 	int result = -1;
 	int x_i, y_i, x_f, y_f;
 
+	/*
+		Nb1c3 ->  [1,0]-> : Valid
+		Ng8f6 ->  [6,7]-> : Valid
+		Nb1?? -> [-1,-1] : Invalid (Out of bounds)
+		Nb1c3 ->  [2, 2] : Invalid (Invalid knight move)
+			  : Invalid (Move on top of other)
+			  : Invalid (Piece at x_i, y_i is not a knight) 
+	*/
+
 	/* Knight Move */
 	char * knight_moves[5] = {"Nb1c3", "Ng8f6", "Ne5d3", "Nd2b3", "Nf3h4"};
 	int knight_expected[5][4] = {
@@ -22,6 +31,8 @@ void test_isValidMove(void **state)
     	{3, 1, 1, 2}, // d2 to b3
     	{5, 2, 7, 3}  // f3 to h4
 	};
+
+	int knight_isValid[5] = {};
 
 	for (int i = 0; i < 5; i++)
 	{
