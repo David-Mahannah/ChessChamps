@@ -9,6 +9,8 @@ TEST_TARGET = test
 
 INSTALL_DIR = /usr/local/bin
 
+TEST_SRC = unit_tests/main.c unit_tests/test1.c unit_tests/test2.c unit_tests/test3.c unit_tests/test4.c
+
 
 REQUIRED_LIBRARIES := ncurses cmocka
 
@@ -25,11 +27,11 @@ endif
 
 $(TARGET):
 	@echo "*** BUILDING ***"
-	$(CC) -o bin/$(TARGET) $(SRC_DIR)/main.c $(SRC_DIR)/chess.c $(BUILD_LIBS)
+	$(CC) -o bin/$(TARGET) $(SRC_DIR)/main.c $(CFLAGS) $(SRC_DIR)/chess.c $(BUILD_LIBS)
 	@echo "*** BUILD COMPLETE ***"
 
 test:
-	$(CC) -o bin/$(TEST_TARGET) unit_tests/main.c unit_tests/test1.c unit_tests/test2.c $(SRC_DIR)/chess.c $(TEST_LIBS)
+	$(CC) -o bin/$(TEST_TARGET) $(CFLAGS) $(TEST_SRC) $(SRC_DIR)/chess.c $(TEST_LIBS)
 	@./bin/test
 
 install: $(TARGET)

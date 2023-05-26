@@ -151,14 +151,14 @@ void test_parseChessNotation(void **state)
 	}
 
 	/* Long Castle */
-	result=_parseChessNotation("O-O-O", &x_i, &y_i, &x_f, &y_f, WHITE);
+	result=_parseChessNotation("0-0-0", &x_i, &y_i, &x_f, &y_f, WHITE);
 	assert_int_equal(result, LONG_CASTLE);
 	assert_int_equal(x_i, 4);
 	assert_int_equal(y_i, 0);
 	assert_int_equal(x_f, 2);
 	assert_int_equal(y_f, 0);
 
-	result=_parseChessNotation("O-O-O", &x_i, &y_i, &x_f, &y_f, BLACK);
+	result=_parseChessNotation("0-0-0", &x_i, &y_i, &x_f, &y_f, BLACK);
 	assert_int_equal(result, LONG_CASTLE);
 	assert_int_equal(x_i, 4);
 	assert_int_equal(y_i, 7);
@@ -166,14 +166,14 @@ void test_parseChessNotation(void **state)
 	assert_int_equal(y_f, 7);
 
 	/* Short Castle */
-	result=_parseChessNotation("O-O", &x_i, &y_i, &x_f, &y_f, WHITE);
+	result=_parseChessNotation("0-0", &x_i, &y_i, &x_f, &y_f, WHITE);
 	assert_int_equal(result, SHORT_CASTLE);
 	assert_int_equal(x_i, 4);
 	assert_int_equal(y_i, 0);
 	assert_int_equal(x_f, 6);
 	assert_int_equal(y_f, 0);
 
-	result=_parseChessNotation("O-O", &x_i, &y_i, &x_f, &y_f, BLACK);
+	result=_parseChessNotation("0-0", &x_i, &y_i, &x_f, &y_f, BLACK);
 	assert_int_equal(result, SHORT_CASTLE);
 	assert_int_equal(x_i, 4);
 	assert_int_equal(y_i, 7);

@@ -12,6 +12,8 @@ int main(int argc, char ** argv)
 	const struct CMUnitTest tests[] = {
 		cmocka_unit_test(test_resetBoard),
 		cmocka_unit_test(test_parseChessNotation),
+		cmocka_unit_test(test__move),
+		cmocka_unit_test(test_isValidMove),
 	};
 
 	return cmocka_run_group_tests(tests, NULL, NULL);

@@ -11,183 +11,351 @@ void test_isValidMove(void **state)
 	(void) state;
 	
 	int result = -1;
-	int x_i, y_i, x_f, y_f;
 
+	board_t b;
+	resetBoard(b);
 	/*
-		Nb1c3 ->  [1,0]-> : Valid
-		Ng8f6 ->  [6,7]-> : Valid
-		Nb1?? -> [-1,-1] : Invalid (Out of bounds)
-		Nb1c3 ->  [2, 2] : Invalid (Invalid knight move)
-			  : Invalid (Move on top of other)
-			  : Invalid (Piece at x_i, y_i is not a knight) 
-	*/
+		** WHITE **
+		Nb1c3 -> [1,0]->[2,2] : Valid
+		Ng8f6 -> [6,7]->[5,5] : Invalid
+		Nb1?? -> [1,0]->[-1,-1] : Invalid (Out of bounds)
+		Nb1c3 -> [1,0]->[2,2] : Invalid (Invalid knight move)
+		Nb1d2 -> [1,0]->[3,1] : Invalid (Move on top of other)
+		Nd4b3 -> [3,3]->[1,2] : Invalid (Piece at x_i, y_i is not a knight) 
+		** BLACK **
+		Nb1c3 -> [1,0]->[2,2] : Invalid
+		Ng8f6 -> [6,7]->[5,5] : Valid
+		Nb1?? -> [1,0]->[-1,-1] : Invalid (Out of bounds)
+		Nb1c3 -> [1,0]->[2,2] : Invalid (Invalid knight move)
+		Nb1d2 -> [1,0]->[3,1] : Invalid (Move on top of other)
+		Nd4b3 -> [3,3]->[1,2] : Invalid (Piece at x_i, y_i is not a knight) 
 
+
+	*/
 	/* Knight Move */
-	char * knight_moves[5] = {"Nb1c3", "Ng8f6", "Ne5d3", "Nd2b3", "Nf3h4"};
-	int knight_expected[5][4] = {
-    	{1, 0, 2, 2}, // b1 to c3
-    	{6, 7, 5, 5}, // g8 to f6
-    	{4, 4, 3, 2}, // e5 to d3
-    	{3, 1, 1, 2}, // d2 to b3
-    	{5, 2, 7, 3}  // f3 to h4
+	int knight_coordinates[6][4] = {
+    	{1, 0, 2, 2},   // b1 -> c3
+    	{6, 7, 5, 5},   // g8 -> f6
+    	{4, 4, -1, -1}, // b1 -> ??
+    	{1, 0, 2, 2},   // b1 -> c3
+    	{1, 0, 3, 1},   // b1 -> d2
+    	{3, 3, 1, 2}    // d4 -> b3
 	};
 
-	int knight_isValid[5] = {};
-
-	for (int i = 0; i < 5; i++)
+	int white_knight_expected_outputs[6] = {1,0,0,1,0,0};
+	int black_knight_expected_outputs[6] = {0,1,0,0,0,0};
+	for (int i = 0; i < 6; i++)
 	{
-		result=_parseChessNotation(knight_moves[i], &x_i, &y_i, &x_f, &y_f, WHITE);
-		assert_int_equal(result, KNIGHT_MOVE);
-		assert_int_equal(x_i, knight_expected[i][0]);
-		assert_int_equal(y_i, knight_expected[i][1]);
-		assert_int_equal(x_f, knight_expected[i][2]);
-		assert_int_equal(y_f, knight_expected[i][3]);
+		result = _isValidMove(b, knight_coordinates[i][0],
+						knight_coordinates[i][1],
+						knight_coordinates[i][2],
+						knight_coordinates[i][3],
+						KNIGHT_MOVE, WHITE);
+
+		assert_int_equal(result, white_knight_expected_outputs[i]);
+
 		
-		result=_parseChessNotation(knight_moves[i], &x_i, &y_i, &x_f, &y_f, BLACK);
-		assert_int_equal(result, KNIGHT_MOVE);
-		assert_int_equal(x_i, knight_expected[i][0]);
-		assert_int_equal(y_i, knight_expected[i][1]);
-		assert_int_equal(x_f, knight_expected[i][2]);
-		assert_int_equal(y_f, knight_expected[i][3]);
+		result = _isValidMove(b, knight_coordinates[i][0],
+						knight_coordinates[i][1],
+						knight_coordinates[i][2],
+						knight_coordinates[i][3],
+						KNIGHT_MOVE, BLACK);
+
+		assert_int_equal(result, black_knight_expected_outputs[i]);
 	}
 	
 	/* Bishop Move */	
-	char * bishop_moves[5] = {"Bc1h6", "Be4a8", "Bd7h3", "Bb2g7", "Bf3c6"};
-	int bishop_expected[5][4] = {
-    	{2, 0, 7, 5}, // c1 to h6
-    	{4, 3, 0, 7}, // e4 to a8
-    	{3, 6, 7, 2}, // d7 to h3
-    	{1, 1, 6, 6}, // b2 to g7
-    	{5, 2, 2, 5}  // f3 to c6
+	/*
+		** WHITE **
+		b2b3  -> [1,1]->[1,2] : Valid Pawn move
+		Bc1a3 -> [2,0]->[0,2] : Valid bishop
+		
+		Bc1a3 -> [2,0]->[0,2] : Invalid (Moves through pawn)
+		Bc1?? -> [2,0]->[1,-1] : Invalid (bishop move)
+		Ba3b4 -> [0,2]->[1,3]  : Invalid (Piece at x_i, y_i is not a knight)
+		
+		b7b6  -> [1,6]->[1,5] : Valid Pawn move
+		Bc8a6 -> [2,7]->[0,5] : Valid bishop
+		RESET
+		Bc1a3 -> [2,7]->[0,5] : Invalid (Moves through pawn)
+		Bc1?? -> [2,0]->[1,-1] : Invalid (bishop move)
+		Ba3b4 -> [0,2]->[1,3]  : Invalid (Piece at x_i, y_i is not a knight)
+		** BLACK **
+
+	*/
+
+	int bishop_coordinates[10][4] = {
+    	{1, 1, 1, 2},   // b2 -> b3
+    	{2, 0, 0, 2},   // c1 -> a3
+
+		{2, 0, 0, 2},   // c1 -> a3
+    	{2, 0, 1, -1},  // c1 -> ??
+    	{0, 2, 1, 3},   // a3 -> b4
+
+    	{1, 6, 1, 5},   // b7 -> b6
+    	{2, 7, 0, 5},   // c8 -> a6
+
+    	{2, 7, 0, 5},   // d4 -> b3
+    	{2, 7, 1, 8},   // c8 -> ??
+    	{0, 2, 1, 3},   // a3 -> b4
 	};
 
-	for (int i = 0; i < 5; i++)
+	int white_bishop_expected_outputs[10] = {1,1,0,0,0,0,0,0,0,0};
+	int black_bishop_expected_outputs[10] = {0,0,0,0,0,1,1,0,0,0};
+
+	board_t black_board;
+	board_t white_board;
+
+	resetBoard(black_board);
+	resetBoard(white_board);
+
+	for (int i = 0; i < 10; i++)
 	{
 
-		result=_parseChessNotation(bishop_moves[i], &x_i, &y_i, &x_f, &y_f, WHITE);
-		assert_int_equal(result, BISHOP_MOVE);
-		assert_int_equal(x_i, bishop_expected[i][0]);
-		assert_int_equal(y_i, bishop_expected[i][1]);
-		assert_int_equal(x_f, bishop_expected[i][2]);
-		assert_int_equal(y_f, bishop_expected[i][3]);
+		if (i == 2 || i == 7)
+		{
+			resetBoard(black_board);
+			resetBoard(white_board);
+		}
 
-		result=_parseChessNotation(bishop_moves[i], &x_i, &y_i, &x_f, &y_f, BLACK);
+		int move;
+		if (i == 0 || i == 5)
+		{
+			move = PAWN_MOVE;
+		} else {
+			move = BISHOP_MOVE;
+		}
 
-		assert_int_equal(x_i, bishop_expected[i][0]);
-		assert_int_equal(y_i, bishop_expected[i][1]);
-		assert_int_equal(x_f, bishop_expected[i][2]);
-		assert_int_equal(y_f, bishop_expected[i][3]);
-		assert_int_equal(result, BISHOP_MOVE);
+		result = _isValidMove(white_board, bishop_coordinates[i][0],
+						bishop_coordinates[i][1],
+						bishop_coordinates[i][2],
+						bishop_coordinates[i][3],
+						move, WHITE);
+
+		if (result == 1)
+		{
+			_move(white_board, bishop_coordinates[i][0],
+					 bishop_coordinates[i][1],
+					 bishop_coordinates[i][2],
+					 bishop_coordinates[i][3]);
+		}
+
+		assert_int_equal(result, white_bishop_expected_outputs[i]);
+
+
+		result = _isValidMove(black_board, bishop_coordinates[i][0],
+						bishop_coordinates[i][1],
+						bishop_coordinates[i][2],
+						bishop_coordinates[i][3],
+						move, BLACK);
+		if (result == 1)
+		{
+			_move(black_board, bishop_coordinates[i][0],
+				 			   bishop_coordinates[i][1],
+				 			   bishop_coordinates[i][2],
+				 			   bishop_coordinates[i][3]);
+		}
+		assert_int_equal(result, black_bishop_expected_outputs[i]);
 	}
 
+
+
 	/* Rook Move */	
-	char * rook_moves[5] = {"Ra1a5", "Rh1h6", "Rd3d7", "Re2b2", "Rf3f7"};
-	int rook_expected[5][4] = {
-    	{0, 0, 0, 4}, // a1 to a5
-    	{7, 0, 7, 5}, // h1 to h6
-    	{3, 2, 3, 6}, // d3 to d7
-    	{4, 1, 1, 1}, // e2 to b2
-    	{5, 2, 5, 6}  // f3 to f7
-	};	
 
-	for (int i = 0; i < 5; i++)
+	int rook_coordinates[10][4] = {
+		{0, 0, 0, 2},   // c1 -> a3 (Invalid moves through pawn)
+						// Remove pawn
+    	{0, 0, 0, 2},   // a1 -> a3 Valid
+
+		{7, 7, 7, 5},   // c8 -> a6
+						// Remove pawn
+    	{7, 7, 7, 5},   // a3 -> b4
+	};
+
+	int white_rook_expected_outputs[4] = {0,1,0,0};
+	int black_rook_expected_outputs[4] = {0,0,0,1};
+
+	resetBoard(black_board);
+	resetBoard(white_board);
+
+	for (int i = 0; i < 4; i++)
 	{
-		result=_parseChessNotation(rook_moves[i], &x_i, &y_i, &x_f, &y_f, WHITE);
-		assert_int_equal(result, ROOK_MOVE);
-		assert_int_equal(x_i, rook_expected[i][0]);
-		assert_int_equal(y_i, rook_expected[i][1]);
-		assert_int_equal(x_f, rook_expected[i][2]);
-		assert_int_equal(y_f, rook_expected[i][3]);
+		if (i == 1)
+		{
+			// Remove A2 pawn
+			black_board[6][0] = ' ';
+			white_board[6][0] = ' ';
+		}
 
-		result=_parseChessNotation(rook_moves[i], &x_i, &y_i, &x_f, &y_f, BLACK);
-		assert_int_equal(result, ROOK_MOVE);
-		assert_int_equal(x_i, rook_expected[i][0]);
-		assert_int_equal(y_i, rook_expected[i][1]);
-		assert_int_equal(x_f, rook_expected[i][2]);
-		assert_int_equal(y_f, rook_expected[i][3]);
+		if (i == 3)
+		{
+			// Remove H7 pawn
+			black_board[1][7] = ' ';
+			white_board[1][7] = ' ';
+		}
+
+		int move;
+		result = _isValidMove(white_board, rook_coordinates[i][0],
+						rook_coordinates[i][1],
+						rook_coordinates[i][2],
+						rook_coordinates[i][3],
+						ROOK_MOVE, WHITE);
+
+		assert_int_equal(result, white_rook_expected_outputs[i]);
+
+		result = _isValidMove(black_board, rook_coordinates[i][0],
+						rook_coordinates[i][1],
+						rook_coordinates[i][2],
+						rook_coordinates[i][3],
+						ROOK_MOVE, BLACK);
+
+		assert_int_equal(result, black_rook_expected_outputs[i]);
 	}
 
 	/* Queen Move */
-	char * queen_moves[5] = {"Qd1d5", "Qh1e4", "Qb6f6", "Qe5b8", "Qf3c6"};
-	int queen_expected[5][4] = {
-    	{3, 0, 3, 4}, // d1 to d5
-    	{7, 0, 4, 3}, // h1 to e4
-    	{1, 5, 5, 5}, // b6 to f6
-    	{4, 4, 1, 7}, // e5 to b8
-    	{5, 2, 2, 5}  // f3 to c6
+
+	int queen_coordinates[20][4] = {
+		// WHITE
+		// Rook-like moves
+		{3, 0, 3, 2},   // d1 -> d3 (Invalid moves through pawn)
+    	{3, 0, 3, 1},   // d1 -> d2 (Invalid moves onto pawn)
+		{3, 1, 3, 3},	// Pawn moves up two
+		{3, 0, 3, 2},	// d1 -> d3 (Valid)
+		{3, 0, 3, 1},	// d1 -> d2 (valid)
+
+		// Bishop-like moves
+		{3, 0, 1, 2},   // d1 -> c2 (Invalid moves through pawn)
+		{3, 0, 2, 1},	// d1 -> b3 (Invalid moves onto pawn)
+		{2, 1, 2, 2},	// Pawn move up one
+    	{3, 0, 1, 2},   // d1 -> c2 (Valid)
+		{3, 0, 2, 1},	// d1 -> b3 (Valid)
+
+		// BLACK
+		// Rook-like moves
+		{3, 7, 3, 5},   // d1 -> d3 (Invalid moves through pawn)
+    	{3, 7, 3, 6},   // d1 -> d2 (Invalid moves onto pawn)
+		{3, 6, 3, 4},	// Pawn moves up two
+		{3, 7, 3, 5},	// d1 -> d3 (Valid)
+		{3, 7, 3, 6},	// d1 -> d2 (valid)
+
+		// Bishop-like moves
+		{3, 7, 1, 5},   // d1 -> c2 (Invalid moves through pawn)
+		{3, 7, 2, 6},	// d1 -> b3 (Invalid moves onto pawn)
+		{2, 6, 2, 5},	// Pawn move up one
+    	{3, 7, 1, 5},   // d1 -> c2 (Valid)
+		{3, 7, 2, 6},	// d1 -> b3 (Valid)
+
 	};
 
-	for (int i = 0; i < 5; i++)
-	{
-		result = _parseChessNotation(queen_moves[i], &x_i, &y_i, &x_f, &y_f, WHITE);
-		assert_int_equal(result, QUEEN_MOVE);
-		assert_int_equal(x_i, queen_expected[i][0]);
-		assert_int_equal(y_i, queen_expected[i][1]);
-		assert_int_equal(x_f, queen_expected[i][2]);
-		assert_int_equal(y_f, queen_expected[i][3]);
+	int white_queen_expected_outputs[20] = {0,0,1,1,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0};
+	int black_queen_expected_outputs[20] = {0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,1,1,1};
 
-		result = _parseChessNotation(queen_moves[i], &x_i, &y_i, &x_f, &y_f, BLACK);
-		assert_int_equal(result, QUEEN_MOVE);
-		assert_int_equal(x_i, queen_expected[i][0]);
-		assert_int_equal(y_i, queen_expected[i][1]);
-		assert_int_equal(x_f, queen_expected[i][2]);
-		assert_int_equal(y_f, queen_expected[i][3]);
+	resetBoard(black_board);
+	resetBoard(white_board);
+
+	int move;
+
+	for (int i = 0; i < 20; i++)
+	{
+		move = QUEEN_MOVE;
+		if (i == 2 || i == 7 || i == 12 || i == 17)
+		{
+			move = PAWN_MOVE;
+		}
+	
+		if (i == 10)
+		{
+			resetBoard(black_board);
+			resetBoard(white_board);
+		}
+
+		result = _isValidMove(white_board, queen_coordinates[i][0],
+										   queen_coordinates[i][1],
+										   queen_coordinates[i][2],
+										   queen_coordinates[i][3],
+										   move, WHITE);
+
+		assert_int_equal(result, white_queen_expected_outputs[i]);
+
+		if (i == 2 || i == 7 || i == 12 || i == 17)
+		{
+			_move(white_board, queen_coordinates[i][0],
+					 		   queen_coordinates[i][1],
+					 		   queen_coordinates[i][2],
+					 		   queen_coordinates[i][3]);
+		}
+
+
+		result = _isValidMove(black_board, queen_coordinates[i][0],
+										   queen_coordinates[i][1],
+										   queen_coordinates[i][2],
+										   queen_coordinates[i][3],
+										   move, BLACK);
+
+		assert_int_equal(result, black_queen_expected_outputs[i]);
+		
+		if (i == 2 || i == 7 || i == 12 || i == 17)
+		{
+			_move(black_board, queen_coordinates[i][0],
+					 queen_coordinates[i][1],
+					 queen_coordinates[i][2],
+					 queen_coordinates[i][3]);
+		}
 	}
 
-	/* King Move */
-	char * king_moves[5] = {"Ke1d2", "Ke1f2", "Ke1e2", "Ke1f1", "Ke1d1"};
-	int king_expected[5][4] = {
-	    {4, 0, 3, 1}, // e1 to d2
-    	{4, 0, 5, 1}, // e1 to f2
-    	{4, 0, 4, 1}, // e1 to e2
-    	{4, 0, 5, 0}, // e1 to f1
-    	{4, 0, 3, 0}  // e1 to d1
+	
+	/* King Move */	
+	int king_coordinates[4][4] = {
+		// White
+		{4, 0, 4, 1},   // e1 -> e2 (Invalid moves onto other piece)
+    	{4, 0, 4, -1},   // e1 -> ?? (Invalid moves out of bounds)
+						// Remove pawn
+		{4, 0, 4, 1},   // e1 -> e2 (Valid)
+    	{4, 1, 3, 2},   // e2 -> d3 (Valid)
+
+		// Black
+		{4, 7, 4, 6},   // c1 -> a3 (Invalid moves onto other piece)
+    	{4, 7, 4, 8},   // a1 -> a3 (Invalid moves out of bounds)
+						// Remove pawn
+		{4, 7, 4, 6},   // c8 -> a6 (Valid)
+    	{4, 6, 3, 5},   // a3 -> b4 (Valid)
 	};
 
-	for (int i = 0; i < 5; i++)
-	{
-		result = _parseChessNotation(king_moves[i], &x_i, &y_i, &x_f, &y_f, WHITE);
-		assert_int_equal(result, KING_MOVE);
-		assert_int_equal(x_i, king_expected[i][0]);
-		assert_int_equal(y_i, king_expected[i][1]);
-		assert_int_equal(x_f, king_expected[i][2]);
-		assert_int_equal(y_f, king_expected[i][3]);
+	int white_king_expected_outputs[4] = {0,0,1,1,0,0,0,0};
+	int black_king_expected_outputs[4] = {0,0,0,0,0,0,1,1};
 
-		result = _parseChessNotation(king_moves[i], &x_i, &y_i, &x_f, &y_f, BLACK);
-		assert_int_equal(result, KING_MOVE);
-		assert_int_equal(x_i, king_expected[i][0]);
-		assert_int_equal(y_i, king_expected[i][1]);
-		assert_int_equal(x_f, king_expected[i][2]);
-		assert_int_equal(y_f, king_expected[i][3]);
+	resetBoard(black_board);
+	resetBoard(white_board);
+
+	for (int i = 0; i < 8; i++)
+	{
+		if (i == 2)
+		{
+			white_board[6][4] = ' ';
+		}
+
+		if (i == 6)
+		{
+			black_board[1][4] = ' ';
+		}
+
+		result = _isValidMove(white_board, king_coordinates[i][0],
+						king_coordinates[i][1],
+						king_coordinates[i][2],
+						king_coordinates[i][3],
+						KING_MOVE, WHITE);
+
+		assert_int_equal(result, white_king_expected_outputs[i]);
+
+		result = _isValidMove(black_board, king_coordinates[i][0],
+						king_coordinates[i][1],
+						king_coordinates[i][2],
+						king_coordinates[i][3],
+						KING_MOVE, BLACK);
+
+		assert_int_equal(result, black_king_expected_outputs[i]);
 	}
 
 	/* Long Castle */
-	result=_parseChessNotation("O-O-O", &x_i, &y_i, &x_f, &y_f, WHITE);
-	assert_int_equal(result, LONG_CASTLE);
-	assert_int_equal(x_i, 4);
-	assert_int_equal(y_i, 0);
-	assert_int_equal(x_f, 2);
-	assert_int_equal(y_f, 0);
-
-	result=_parseChessNotation("O-O-O", &x_i, &y_i, &x_f, &y_f, BLACK);
-	assert_int_equal(result, LONG_CASTLE);
-	assert_int_equal(x_i, 4);
-	assert_int_equal(y_i, 7);
-	assert_int_equal(x_f, 2);
-	assert_int_equal(y_f, 7);
-
-	/* Short Castle */
-	result=_parseChessNotation("O-O", &x_i, &y_i, &x_f, &y_f, WHITE);
-	assert_int_equal(result, SHORT_CASTLE);
-	assert_int_equal(x_i, 4);
-	assert_int_equal(y_i, 0);
-	assert_int_equal(x_f, 6);
-	assert_int_equal(y_f, 0);
-
-	result=_parseChessNotation("O-O", &x_i, &y_i, &x_f, &y_f, BLACK);
-	assert_int_equal(result, SHORT_CASTLE);
-	assert_int_equal(x_i, 4);
-	assert_int_equal(y_i, 7);
-	assert_int_equal(x_f, 6);
-	assert_int_equal(y_f, 7);
+	/* Short Castle */	
 }
