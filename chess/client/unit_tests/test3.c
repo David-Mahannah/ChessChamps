@@ -305,7 +305,7 @@ void test_isValidMove(void **state)
 
 	
 	/* King Move */	
-	int king_coordinates[4][4] = {
+	int king_coordinates[8][4] = {
 		// White
 		{4, 0, 4, 1},   // e1 -> e2 (Invalid moves onto other piece)
     	{4, 0, 4, -1},   // e1 -> ?? (Invalid moves out of bounds)
@@ -321,8 +321,8 @@ void test_isValidMove(void **state)
     	{4, 6, 3, 5},   // a3 -> b4 (Valid)
 	};
 
-	int white_king_expected_outputs[4] = {0,0,1,1,0,0,0,0};
-	int black_king_expected_outputs[4] = {0,0,0,0,0,0,1,1};
+	int white_king_expected_outputs[8] = {0,0,1,1,0,0,0,0};
+	int black_king_expected_outputs[8] = {0,0,0,0,0,0,1,1};
 
 	resetBoard(black_board);
 	resetBoard(white_board);
@@ -332,6 +332,12 @@ void test_isValidMove(void **state)
 		if (i == 2)
 		{
 			white_board[6][4] = ' ';
+		}
+
+		if (i == 4)
+		{
+			resetBoard(black_board);
+			resetBoard(white_board);
 		}
 
 		if (i == 6)
@@ -356,6 +362,171 @@ void test_isValidMove(void **state)
 		assert_int_equal(result, black_king_expected_outputs[i]);
 	}
 
+
 	/* Long Castle */
+	int long_castle_coordinates[4][4] = {
+		// White
+		{4, 0, 2, 0},   // e1 -> e2 (Invalid moves onto other piece)
+						// Remove pawn
+    	{4, 0, 2, 0},   // e2 -> d3 (Valid)
+
+		// Black
+		{4, 7, 2, 7},   // c1 -> a3 (Invalid moves onto other piece)
+						// Remove pawn
+    	{4, 7, 2, 7},   // a3 -> b4 (Valid)
+	};
+
+	int white_long_castle_expected_outputs[8] = {0,1,0,0};
+	int black_long_castle_expected_outputs[8] = {0,0,0,1};
+
+	resetBoard(black_board);
+	resetBoard(white_board);
+
+	for (int i = 0; i < 4; i++)
+	{
+		if (i == 1)
+		{
+			white_board[7][1] = ' ';
+			white_board[7][2] = ' ';
+			white_board[7][3] = ' ';
+		}
+
+		if (i == 2)
+		{
+			resetBoard(black_board);
+			resetBoard(white_board);
+		}
+
+		if (i == 3)
+		{
+			black_board[0][1] = ' ';
+			black_board[0][2] = ' ';
+			black_board[0][3] = ' ';
+		}
+
+		result = _isValidMove(white_board, long_castle_coordinates[i][0],
+						long_castle_coordinates[i][1],
+						long_castle_coordinates[i][2],
+						long_castle_coordinates[i][3],
+						LONG_CASTLE, WHITE);
+
+		assert_int_equal(result, white_long_castle_expected_outputs[i]);
+
+		result = _isValidMove(black_board, long_castle_coordinates[i][0],
+						long_castle_coordinates[i][1],
+						long_castle_coordinates[i][2],
+						long_castle_coordinates[i][3],
+						LONG_CASTLE, BLACK);
+
+		assert_int_equal(result, black_long_castle_expected_outputs[i]);
+	}
+
 	/* Short Castle */	
+	int short_castle_coordinates[4][4] = {
+		// White
+		{4, 0, 6, 0},   // e1 -> e2 (Invalid moves onto other piece)
+						// Remove pawn
+    	{4, 0, 6, 0},   // e2 -> d3 (Valid)
+
+		// Black
+		{4, 7, 6, 7},   // c1 -> a3 (Invalid moves onto other piece)
+						// Remove pawn
+    	{4, 7, 6, 7},   // a3 -> b4 (Valid)
+	};
+
+	int white_short_castle_expected_outputs[8] = {0,1,0,0};
+	int black_short_castle_expected_outputs[8] = {0,0,0,1};
+
+	resetBoard(black_board);
+	resetBoard(white_board);
+
+	for (int i = 0; i < 8; i++)
+	{
+		if (i == 1)
+		{
+			white_board[7][5] = ' ';
+			white_board[7][6] = ' ';
+		}
+
+		if (i == 2)
+		{
+			resetBoard(black_board);
+			resetBoard(white_board);
+		}
+
+		if (i == 3)
+		{
+			black_board[0][5] = ' ';
+			black_board[0][6] = ' ';
+		}
+
+		result = _isValidMove(white_board, short_castle_coordinates[i][0],
+						short_castle_coordinates[i][1],
+						short_castle_coordinates[i][2],
+						short_castle_coordinates[i][3],
+						SHORT_CASTLE, WHITE);
+
+		assert_int_equal(result, white_short_castle_expected_outputs[i]);
+
+		result = _isValidMove(black_board, short_castle_coordinates[i][0],
+						short_castle_coordinates[i][1],
+						short_castle_coordinates[i][2],
+						short_castle_coordinates[i][3],
+						SHORT_CASTLE, BLACK);
+
+		assert_int_equal(result, black_short_castle_expected_outputs[i]);
+	}
+
+
+	/* Pawn move */
+	int pawn_coordinates[12][4] = {
+		// White
+		{3, 1, 3, 3},   // d2 -> d4 (Valid)
+    	{3, 3, 3, 4},	// d4 -> d5 (Valid)
+		{3, 4, 3, 3},	// d5 -> d4 (Invalid moving backwards)
+		{3, 4, 2, 5},	// d5 -> c6 (Invalid moving diagonal without attack)
+		{3, 4, 3, 5},   // d5 -> d6 (Valid)
+    	{3, 5, 2, 6},   // d6 -> c7 (Valid)
+
+		// Black
+		{3, 6, 3, 4},   // d7 -> d5 (Valid)
+    	{3, 4, 3, 3},	// d5 -> d4 (Valid)
+		{3, 3, 3, 4},	// d4 -> d5 (Invalid moving backwards)
+		{3, 3, 2, 2},	// d4 -> c3 (Invalid moving diagonal without attack)
+		{3, 3, 3, 2},   // d4 -> d3 (Valid)
+    	{3, 2, 2, 1},   // d3 -> c2 (Valid)
+	};
+
+	int white_pawn_expected_outputs[16] = {1,1,0,0,1,1,0,0,0,0,0,0};
+	int black_pawn_expected_outputs[16] = {0,0,0,0,0,0,1,1,0,0,1,1};
+
+	resetBoard(black_board);
+	resetBoard(white_board);
+
+	for (int i = 0; i < 16; i++)
+	{
+		printf("%d\n", i);
+		if (i == 6)
+		{
+			resetBoard(black_board);
+			resetBoard(white_board);
+		}
+		
+		result = _isValidMove(white_board, pawn_coordinates[i][0],
+						pawn_coordinates[i][1],
+						pawn_coordinates[i][2],
+						pawn_coordinates[i][3],
+						PAWN_MOVE, WHITE);
+
+		assert_int_equal(result, white_pawn_expected_outputs[i]);
+
+		result = _isValidMove(black_board, pawn_coordinates[i][0],
+						pawn_coordinates[i][1],
+						pawn_coordinates[i][2],
+						pawn_coordinates[i][3],
+						PAWN_MOVE, BLACK);
+
+		assert_int_equal(result, black_pawn_expected_outputs[i]);
+	}
+
 }

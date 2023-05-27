@@ -304,6 +304,13 @@ int _isValidMove(board_t b, int x_i, int y_i, int x_f, int y_f, int move_type, s
 	else if (move_type == KING_MOVE)
 	{
 		return 1;
+	} else if (move_type == PAWN_MOVE)
+	{
+		if ((side == WHITE && b[7-y_i][x_i] != 'p') ||
+			(side == BLACK && b[7-y_i][x_i] != 'P'))
+		{
+			return 0;
+		}
 	}
 	return 1;
 }
@@ -370,9 +377,47 @@ int _parseChessNotation(char * str, int * x_i, int * y_i, int * x_f, int * y_f, 
 	return out;
 }
 
+/*
+int _checks(board_t b, int move_type, int x, int y, side_t side)
+{
+	char expected_king;
+	if (side == WHITE)
+	{
+		expected_king = "K"; // Looking for black king 
+	} else {
+		expected_king = "k"; // Looking for white king
+	}
+
+	if (move_type == KNIGHT_MOVE)
+	{
+		if ((b[(y - 1)][(x + 2)] == expected_king) ||
+		    (b[(y + 1)][(x + 2)] == expected_king) ||
+		    (b[(y - 1)][(x - 2)] == expected_king) ||
+		    (b[(y + 1)][(x - 2)] == expected_king) ||
+		    (b[(y + 2)][(x - 1)] == expected_king) ||
+		    (b[(y - 2)][(x - 1)] == expected_king) ||
+		    (b[(y + 2)][(x + 1)] == expected_king) ||
+		    (b[(y - 2)][(x + 1)] == expected_king))
+	} else if (move_type == BISHOP_MOVE) {
+
+	} else if (move_type == ROOK_MOVE) {
+
+	} else if (move_type == SHORT_CASTLE) {
+
+	} else if (move_type == LONG_CASTLE) {
+
+	} else if (move_type == PAWN_MOVE) {
+
+	} else {
+		printf("Invalid move type\n");
+		return -1;
+	}
+	return 1;
+}
+*/
 int _getCheckStatus(board_t b)
 {
-	return -1;
+	return 1;
 }
 
 int move(board_t b, char * str, int * checkstatus, side_t side)
