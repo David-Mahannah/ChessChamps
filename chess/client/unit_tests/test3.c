@@ -505,7 +505,6 @@ void test_isValidMove(void **state)
 
 	for (int i = 0; i < 16; i++)
 	{
-		printf("%d\n", i);
 		if (i == 6)
 		{
 			resetBoard(black_board);
@@ -519,6 +518,13 @@ void test_isValidMove(void **state)
 						PAWN_MOVE, WHITE);
 
 		assert_int_equal(result, white_pawn_expected_outputs[i]);
+		if (result == 1)
+		{
+			_move(white_board, pawn_coordinates[i][0],
+					 pawn_coordinates[i][1],
+					 pawn_coordinates[i][2],
+					 pawn_coordinates[i][3]);
+		}
 
 		result = _isValidMove(black_board, pawn_coordinates[i][0],
 						pawn_coordinates[i][1],
@@ -527,6 +533,13 @@ void test_isValidMove(void **state)
 						PAWN_MOVE, BLACK);
 
 		assert_int_equal(result, black_pawn_expected_outputs[i]);
-	}
 
+		if (result == 1)
+		{
+			_move(black_board, pawn_coordinates[i][0],
+					 pawn_coordinates[i][1],
+					 pawn_coordinates[i][2],
+					 pawn_coordinates[i][3]);
+		}
+	}
 }

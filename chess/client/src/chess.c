@@ -124,7 +124,7 @@ int _isValidMove(board_t b, int x_i, int y_i, int x_f, int y_f, int move_type, s
 		return 0;
 	}
 
-	if (side == WHITE && isupper(b[7-y_i][x_i]) || side == BLACK && islower(b[7-y_i][x_i]))
+	if ((side == WHITE && isupper(b[7-y_i][x_i])) || (side == BLACK && islower(b[7-y_i][x_i])))
 	{
 		return 0;
 	}
@@ -304,11 +304,91 @@ int _isValidMove(board_t b, int x_i, int y_i, int x_f, int y_f, int move_type, s
 	else if (move_type == KING_MOVE)
 	{
 		return 1;
-	} else if (move_type == PAWN_MOVE)
+	}
+	else if (move_type == PAWN_MOVE)
 	{
-		if ((side == WHITE && b[7-y_i][x_i] != 'p') ||
-			(side == BLACK && b[7-y_i][x_i] != 'P'))
+		if (side == WHITE)
 		{
+			if (y_f <= y_i || 			// Moves backwards?
+				b[7-y_i][x_i] != 'p')	// Not your pawn
+			{
+				return 0;
+			}
+
+			// Move up one. Always allowed unless a piece is there...
+			if ((y_f == y_i+1 &&      // Moves up 1 and...
+				(x_f - x_i) == 0) &&  // Doesnt move left or right
+				b[7-y_f][x_f] == ' ') // no piece in the way
+			{
+				return 1;
+			}
+			
+			// Move up two. Only allowed if no other moves
+			if ((y_f == y_i+2 &&
+				(x_f - x_i) == 0) &&
+				(b[7-y_f-1][x_f] == ' ') &&
+				(b[7-y_f][x_f] == ' '))
+			{
+				return 1;
+			}
+			
+			// Moves diagonal right
+			if ((y_f == y_i+1 &&
+				(x_f - x_i) == 1) &&
+				(b[7-y_f][x_f] != ' ') &&
+				(isupper(b[7-y_f][x_f])))
+			{
+				return 1;
+			}
+			// Moves diagonal left
+			if ((y_f == y_i+1 &&
+				(x_f - x_i) == -1) &&
+				(b[7-y_f][x_f] != ' ') &&
+				(isupper(b[7-y_f][x_f])))
+			{
+				return 1;
+			}
+			return 0;
+		} 
+		else if (side == BLACK)
+		{
+			if (y_i <= y_f ||  b[7-y_i][x_i] != 'P')
+			{
+				return 0;
+			}
+
+			// Move up one. Always allowed unless a piece is there...
+			if ((y_f == y_i - 1) &&      // Moves up 1 and...
+				((x_f - x_i) == 0) &&  // Doesnt move left or right
+				(b[7-y_f][x_f] == ' ')) // no piece in the way
+			{
+				return 1;
+			}
+			
+			// Move up two. Only allowed if no other moves
+			if ((y_f == y_i - 2) &&
+				((x_f - x_i) == 0) &&
+				((b[7-y_f-1][x_f]) == ' ') &&
+				(b[7-y_f][x_f] == ' '))
+			{
+				return 1;
+			}
+			
+			// Moves diagonal right
+			if ((y_f == y_i - 1) &&
+				((x_f - x_i) == 1) &&
+				(b[7-y_f][x_f] != ' ') &&
+				(islower(b[7-y_f][x_f])))
+			{
+				return 1;
+			}
+			// Moves diagonal left
+			if ((y_f == y_i - 1) &&
+				((x_f - x_i) == -1) &&
+				(b[7-y_f][x_f] != ' ') &&
+				(islower(b[7-y_f][x_f]))) {
+				return 1;
+			}
 			return 0;
 		}
 	}
