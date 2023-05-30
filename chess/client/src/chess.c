@@ -6,6 +6,29 @@
 #include <locale.h>
 #include <ctype.h>
 
+int piece_map[256] = {0};
+
+void _initializePieceMap() {
+	for (int i = 0; i < 256; i++)
+	{
+		piece_map[i] = INVALID_MOVE;
+	}
+	piece_map['R'] = ROOK_MOVE;
+	piece_map['r'] = ROOK_MOVE;
+	piece_map['B'] = BISHOP_MOVE;
+	piece_map['b'] = BISHOP_MOVE;
+	piece_map['Q'] = QUEEN_MOVE;
+	piece_map['q'] = QUEEN_MOVE;
+	piece_map['K'] = KING_MOVE;
+	piece_map['k'] = KING_MOVE;
+	piece_map['B'] = BISHOP_MOVE;
+	piece_map['b'] = BISHOP_MOVE;
+	piece_map['N'] = KNIGHT_MOVE;
+	piece_map['n'] = KNIGHT_MOVE;
+	piece_map['P'] = PAWN_MOVE;
+	piece_map['p'] = PAWN_MOVE;
+}
+
 void resetBoard(board_t board)
 {
 	// Set up the white pieces
@@ -80,7 +103,6 @@ void printBoard(board_t board, side_t side)
 	}
 }
 
-
 char _move(board_t b, int i, int j, int x, int y)
 {
 	char temp = b[7-y][x];
@@ -88,8 +110,6 @@ char _move(board_t b, int i, int j, int x, int y)
 	b[7-j][i] = ' ';
 	return temp;
 }
-
-
 
 char _removePiece(board_t b, int i, int j)
 {
@@ -102,13 +122,21 @@ char _removePiece(board_t b, int i, int j)
 	return temp;
 }
 
-char _getPieceAt(board_t b, int x, int y)
+char _getPieceAt(board_t b, letter_t y, int x)
 {
-	return b[x - 8][y];
+	int adjusted_x = x - 1;
+	return b[y - 7][adjusted_x];
 }
 
+char _setPieceAt(board_t b, letter_t y, int x, char value)
+{
+	int adjusted_x = x - 1;
+	char ret_val = b[7 - y][adjusted_x];
+	b[y - 7][adjusted_x] = value;
+	return  ret_val;
+}
 
-int _isValidMove(board_t b, int x_i, int y_i, int x_f, int y_f, int move_type, side_t side)
+int _isValidMove(board_t b, int x_i, letter_t y_i, int x_f, letter_t y_f, move_type_t move_type, side_t side)
 {
 	// Out of bounds?
 	if (x_i < 0 || x_i > 7 || 
@@ -119,53 +147,43 @@ int _isValidMove(board_t b, int x_i, int y_i, int x_f, int y_f, int move_type, s
 		return 0;
 	}
 
-	if ((isupper(b[7-y_f][x_f]) && isupper(b[7-y_i][x_i])) || (islower(b[7-y_f][x_f]) && islower(b[7-y_i][x_i])))
-	{
+	if ((isupper(b[7-y_f][x_f]) && isupper(b[7-y_i][x_i])) || (islower(b[7-y_f][x_f]) && islower(b[7-y_i][x_i]))) {
 		return 0;
 	}
 
-	if ((side == WHITE && isupper(b[7-y_i][x_i])) || (side == BLACK && islower(b[7-y_i][x_i])))
-	{
+	if ((side == WHITE && isupper(b[7-y_i][x_i])) || (side == BLACK && islower(b[7-y_i][x_i]))) {
 		return 0;
 	}
 
 	// Individual piece checks
-	if (move_type == LONG_CASTLE)
-	{
-		if (side == WHITE)
-		{
+	if (move_type == LONG_CASTLE) {
+		if (side == WHITE) {
 			if (b[7-0][3] != '.' ||
 				b[7-0][2] != '.' ||
 				b[7-0][1] != '.' ||
-				b[7-0][0] != 'r')
-			{
+				b[7-0][0] != 'r') {
 				return 1;
 			}
 		} else {
 			if (b[7-7][3] != '.' ||
 				b[7-7][2] != '.' ||
 				b[7-7][1] != '.' ||
-				b[7-7][0] != 'R')
-			{
+				b[7-7][0] != 'R') {
 				return 1;
 			}
 		}
 	} 
-	else if (move_type == SHORT_CASTLE)
-	{
-		if (side == WHITE)
-		{
+	else if (move_type == SHORT_CASTLE) {
+		if (side == WHITE) {
 			if (b[7-0][6] != '.' ||
 				b[7-0][5] != '.' ||
-				b[7-0][7] != 'r')
-			{
+				b[7-0][7] != 'r') {
 				return 1;
 			}
 		} else {
 			if (b[7-7][6] != '.' ||
 				b[7-7][5] != '.' ||
-				b[7-7][7] != 'R')
-			{
+				b[7-7][7] != 'R') {
 				return 1;
 			}
 		}
@@ -179,11 +197,9 @@ int _isValidMove(board_t b, int x_i, int y_i, int x_f, int y_f, int move_type, s
 			(x_f == (x_i - 1) && y_f == (y_i + 2)) ||
 			(x_f == (x_i - 1) && y_f == (y_i - 2)) ||
 			(x_f == (x_i + 1) && y_f == (y_i + 2)) ||
-			(x_f == (x_i + 1) && y_f == (y_i - 2)))
-		{
+			(x_f == (x_i + 1) && y_f == (y_i - 2))) {
 			if ((b[7-y_i][x_i] == 'n' && side == WHITE) ||
-				(b[7-y_i][x_i] == 'N' && side == BLACK))
-			{
+				(b[7-y_i][x_i] == 'N' && side == BLACK)) {
 				return 1;
 			}
 		}
@@ -205,27 +221,22 @@ int _isValidMove(board_t b, int x_i, int y_i, int x_f, int y_f, int move_type, s
 			y_i += dy;
 			
 			do {
-				if (b[7-y_i][x_i] != ' ')
-				{
+				if (b[7-y_i][x_i] != ' ') {
 					return 0;
 				}
-
 				x_i += dx;
 				y_i += dy;
 			}
 			while (x_i != x_f && y_i != y_f);
-
 			return 1;
 		}
 		return 0;
 	} 
 	else if (move_type == ROOK_MOVE)
 	{
-		if (abs(x_f - x_i) == 0 || abs(y_f - y_i) == 0)
-		{
+		if (abs(x_f - x_i) == 0 || abs(y_f - y_i) == 0) {
 			int dx, dy;
-			if (x_f == x_i)
-			{
+			if (x_f == x_i) {
 				dy = (y_f > y_i) ? 1 : -1;
 				dx = 0;
 			} else if (y_f == y_i) {	
@@ -236,8 +247,7 @@ int _isValidMove(board_t b, int x_i, int y_i, int x_f, int y_f, int move_type, s
 			do {
 				x_i += dx;
 				y_i += dy;
-				if (b[7-y_i][x_i] != ' ')
-				{
+				if (b[7-y_i][x_i] != ' ') {
 					return 0;
 				}
 			}
@@ -283,9 +293,6 @@ int _isValidMove(board_t b, int x_i, int y_i, int x_f, int y_f, int move_type, s
 			// Bishop-like move
 			dx = (x_f > x_i) ? 1 : -1;
 			dy = (y_f > y_i) ? 1 : -1;
-
-			//x_i += dx;
-			//y_i += dy;
 			
 			do {
 				x_i += dx;
@@ -303,6 +310,7 @@ int _isValidMove(board_t b, int x_i, int y_i, int x_f, int y_f, int move_type, s
 	}
 	else if (move_type == KING_MOVE)
 	{
+		// Currently king moves are all moves are valid
 		return 1;
 	}
 	else if (move_type == PAWN_MOVE)
@@ -350,10 +358,8 @@ int _isValidMove(board_t b, int x_i, int y_i, int x_f, int y_f, int move_type, s
 			}
 			return 0;
 		} 
-		else if (side == BLACK)
-		{
-			if (y_i <= y_f ||  b[7-y_i][x_i] != 'P')
-			{
+		else if (side == BLACK) {
+			if (y_i <= y_f ||  b[7-y_i][x_i] != 'P') {
 				return 0;
 			}
 
@@ -457,7 +463,7 @@ int _parseChessNotation(char * str, int * x_i, int * y_i, int * x_f, int * y_f, 
 	return out;
 }
 
-/*
+
 int _checks(board_t b, int move_type, int x, int y, side_t side)
 {
 	char expected_king;
@@ -479,14 +485,48 @@ int _checks(board_t b, int move_type, int x, int y, side_t side)
 		    (b[(y + 2)][(x + 1)] == expected_king) ||
 		    (b[(y - 2)][(x + 1)] == expected_king))
 	} else if (move_type == BISHOP_MOVE) {
+		int dx = (x_f > x_i) ? 1 : -1;
+		int dy = (y_f > y_i) ? 1 : -1;
 
+		x_i += dx;
+		y_i += dy;
+		
+		do {
+			if (b[7-y_i][x_i] != ' ')
+			{
+				return 0;
+			}
+
+			x_i += dx;
+			y_i += dy;
+		}
 	} else if (move_type == ROOK_MOVE) {
+		int dx, dy;
+		if (x_f == x_i)
+		{
+			dy = (y_f > y_i) ? 1 : -1;
+			dx = 0;
+		} else if (y_f == y_i) {
+			dx = (y_f > x_i) ? 1 : -1;
+			dy = 0;
+		}
 
+		do {
+			x_i += dx;
+			y_i += dy;
+			if (b[7-y_i][x_i] != ' ')
+			{
+				return 0;
+			}
+		
+		}
 	} else if (move_type == SHORT_CASTLE) {
 
 	} else if (move_type == LONG_CASTLE) {
 
 	} else if (move_type == PAWN_MOVE) {
+
+	} else if (move_type == KING_MOVE) {
 
 	} else {
 		printf("Invalid move type\n");
@@ -494,10 +534,24 @@ int _checks(board_t b, int move_type, int x, int y, side_t side)
 	}
 	return 1;
 }
-*/
+
+
+
 int _getCheckStatus(board_t b)
 {
-	return 1;
+	_initializePieceMap();
+	for (int y = 0; y < 8; y++) {
+		for (int x = 0; x < 8; x++) {
+			move_type_t move_type = piece_map[b[y][x]];
+			if (move_type != INVALID_MOVE) {
+				side = isupper(b[y][x]) ? BLACK : WHITE;
+				if (_checks(b, move_type, y, x, side) == 1){
+					return 1;
+				}
+			}
+		}
+	}
+	return 0;
 }
 
 int move(board_t b, char * str, int * checkstatus, side_t side)

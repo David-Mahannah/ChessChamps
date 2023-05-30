@@ -1,6 +1,7 @@
 #ifndef CHESS_H
 #define CHESS_H
 
+/*
 #define INVALID_MOVE 0
 #define LONG_CASTLE 1
 #define SHORT_CASTLE 2
@@ -10,8 +11,10 @@
 #define QUEEN_MOVE 6
 #define KING_MOVE 7
 #define PAWN_MOVE 8
+*/
 
 typedef char board_t[8][8];
+extern int piece_map[256];
 
 // Used to differentiate between different views
 // By default to board is in white notation but I
@@ -22,6 +25,32 @@ typedef enum {
 	WHITE
 } side_t;
 
+typedef enum {
+	INVALID_MOVE,
+	LONG_CASTLE,
+	SHORT_CASTLE,
+	KNIGHT_MOVE,
+	BISHOP_MOVE,
+	ROOK_MOVE,
+	QUEEN_MOVE,
+	KING_MOVE,
+	PAWN_MOVE
+} move_type_t;
+
+typedef enum {A,B,C,D,E,F,G,H} letter_t;
+
+// Gets piece at letter, num value.
+char getPieceAt(board_t b, letter_t y, int x);
+
+// Sets piece at letter, num to value. 
+// Returns the previous value at said location
+char setPieceAt(board_t b, letter_t y, int x, char value);
+
+
+
+
+// Sets up piece map to get move_type_t from char
+void _initializePieceMap();
 
 // Sets board to default state
 void resetBoard(board_t b);
@@ -31,7 +60,6 @@ int move(board_t b, char * str, int * checkStatus, side_t side);
 
 
 /* Interface functions (Exclusive to testing) */
-
 // Print out a pretty version of the board
 void printBoard(board_t b, side_t s);
 
@@ -55,7 +83,7 @@ char _getPieceAt(board_t b, int x, int y);
 
 // Return 1 if move is valid
 // 		  0 if move is invalid
-int _isValidMove(board_t b, int i, int j, int x, int y, int move_type, side_t side);
+int _isValidMove(board_t b, int i, int j, int x, int y, move_type_t move_type, side_t side);
 
 // Return 0 if not in check
 // Return 1 if in check
