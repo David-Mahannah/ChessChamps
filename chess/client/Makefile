@@ -9,8 +9,9 @@ TEST_TARGET = test
 
 INSTALL_DIR = /usr/local/bin
 
-TEST_SRC = unit_tests/main.c unit_tests/test1.c unit_tests/test2.c unit_tests/test3.c unit_tests/test4.c
+#TEST_SRC = unit_tests/main.c unit_tests/test1.c unit_tests/test2.c unit_tests/test3.c unit_tests/test4.c unit_tests/test5.c unit_tests/test6.c
 
+TEST_SRC = $(wildcard unit_tests/*.c)
 
 REQUIRED_LIBRARIES := ncurses cmocka
 

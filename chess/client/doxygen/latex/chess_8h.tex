@@ -1,0 +1,310 @@
+\hypertarget{chess_8h}{}\doxysection{/home/mahan/\+UMNChess\+Champs/chess/client/src/chess.h File Reference}
+\label{chess_8h}\index{/home/mahan/UMNChessChamps/chess/client/src/chess.h@{/home/mahan/UMNChessChamps/chess/client/src/chess.h}}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{chess_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef char \mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}}\mbox{[}8\mbox{]}\mbox{[}8\mbox{]}
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763}{side\+\_\+t}} \{ \mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763af77fb67151d0c18d397069ad8c271ba3}{BLACK}}
+, \mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763a283fc479650da98250635b9c3c0e7e50}{WHITE}}
+ \}
+\item 
+enum \mbox{\hyperlink{chess_8h_a049445f8ca6e7d0daf13a256e4375576}{move\+\_\+type\+\_\+t}} \{ \newline
+\mbox{\hyperlink{chess_8h_a049445f8ca6e7d0daf13a256e4375576a68ae46961ef72ccd7607aa0c27073f5e}{INVALID\+\_\+\+MOVE}}
+, \mbox{\hyperlink{chess_8h_a049445f8ca6e7d0daf13a256e4375576a1c070fe78533f520bfd2d76d43d84d62}{LONG\+\_\+\+CASTLE}}
+, \mbox{\hyperlink{chess_8h_a049445f8ca6e7d0daf13a256e4375576a8a86f2556d13fc139782db4095654708}{SHORT\+\_\+\+CASTLE}}
+, \mbox{\hyperlink{chess_8h_a049445f8ca6e7d0daf13a256e4375576a5942252175888ef4a3f09c2be66defa2}{KNIGHT\+\_\+\+MOVE}}
+, \newline
+\mbox{\hyperlink{chess_8h_a049445f8ca6e7d0daf13a256e4375576aaf5ff9df8934648ed0086bcbf81736a8}{BISHOP\+\_\+\+MOVE}}
+, \mbox{\hyperlink{chess_8h_a049445f8ca6e7d0daf13a256e4375576a507b4ec2cb8fff84669fe03dc8b8c55b}{ROOK\+\_\+\+MOVE}}
+, \mbox{\hyperlink{chess_8h_a049445f8ca6e7d0daf13a256e4375576a0b47c157882dd4ad3bd0211d616b9b89}{QUEEN\+\_\+\+MOVE}}
+, \mbox{\hyperlink{chess_8h_a049445f8ca6e7d0daf13a256e4375576abb161b4e2d956997598a4d9e90454d83}{KING\+\_\+\+MOVE}}
+, \newline
+\mbox{\hyperlink{chess_8h_a049445f8ca6e7d0daf13a256e4375576a5d00251449c01f57c239776258d7fd27}{PAWN\+\_\+\+MOVE}}
+ \}
+\item 
+enum \mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69}{letter\+\_\+t}} \{ \newline
+\mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69a42a4ade1acd55a49164099104990e09f}{A}}
+, \mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69a3f2a77ecd272aa6d6b5902faa5e5fc68}{B}}
+, \mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69a739ce3f516592d245d16fd8a3893472c}{C}}
+, \mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69a77a6b11f9898c052926f1d49765861e8}{D}}
+, \newline
+\mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69ab199e021998d49b1f09338d8b9b18ecb}{E}}
+, \mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69af382a63cc3d6491bf26b59e66f46826d}{F}}
+, \mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69a2fe993340f6abb2234e543cd427df70b}{G}}
+, \mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69a5008b1179f399a2273fd3f6a7fc3b292}{H}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char \mbox{\hyperlink{chess_8h_afad52d212f6c888a3f0c08b7337817e3}{get\+Piece\+At}} (\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}} b, \mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69}{letter\+\_\+t}} y, int x)
+\item 
+char \mbox{\hyperlink{chess_8h_ad75ce87e446cf4ccc93832d5cbfeb4f8}{set\+Piece\+At}} (\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}} b, \mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69}{letter\+\_\+t}} y, int x, char value)
+\begin{DoxyCompactList}\small\item\em Sets piece at letter, num to value. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{chess_8h_afeb0b00844629d6e7e1612c566d89d7c}{\+\_\+initialize\+Piece\+Map}} ()
+\item 
+void \mbox{\hyperlink{chess_8h_a7eb6d3c7111aa244ff5bcce98807a7d4}{reset\+Board}} (\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}} board)
+\item 
+int \mbox{\hyperlink{chess_8h_af252174d79f7b68a589d837b6d3db2f7}{move}} (\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}} b, char $\ast$str, int $\ast$check\+\_\+status, \mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763}{side\+\_\+t}} side)
+\item 
+void \mbox{\hyperlink{chess_8h_a1a7b97ef3fb83092c96fbdf5a0237904}{print\+Board}} (\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}} b, \mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763}{side\+\_\+t}} s)
+\item 
+char \mbox{\hyperlink{chess_8h_addb8a3591f34b67465f29b29534edbcd}{\+\_\+remove\+Piece}} ()
+\item 
+int \mbox{\hyperlink{chess_8h_a21eb0df001e76b49a5f980a2b71e6f98}{\+\_\+parse\+Chess\+Notation}} (char $\ast$str, int $\ast$x\+\_\+i, int $\ast$y\+\_\+i, int $\ast$x\+\_\+f, int $\ast$y\+\_\+f, \mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763}{side\+\_\+t}} side)
+\item 
+char \mbox{\hyperlink{chess_8h_ab2291666e94df9f39785386251b20258}{\+\_\+move}} (\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}} b, int i, int j, int x, int y)
+\item 
+char \mbox{\hyperlink{chess_8h_ad033719299a4cfee7cb6b6ae14a39382}{\+\_\+get\+Piece\+At}} (\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}} b, int x, int y)
+\item 
+int \mbox{\hyperlink{chess_8h_ad755310e7b8cfe221c9ecd9cf1b96ab8}{\+\_\+is\+Valid\+Move}} (\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}} b, int i, int j, int x, int y, \mbox{\hyperlink{chess_8h_a049445f8ca6e7d0daf13a256e4375576}{move\+\_\+type\+\_\+t}} move\+\_\+type, \mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763}{side\+\_\+t}} side)
+\item 
+int \mbox{\hyperlink{chess_8h_abedc1e50534a71ba314ff5a102daf2f1}{\+\_\+get\+Check\+Status}} (\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}} b)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{chess_8h_a3b64828afb6c464bd49051f111bd9f64}{piece\+\_\+map}} \mbox{[}256\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}\label{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}} 
+\index{chess.h@{chess.h}!board\_t@{board\_t}}
+\index{board\_t@{board\_t}!chess.h@{chess.h}}
+\doxysubsubsection{\texorpdfstring{board\_t}{board\_t}}
+{\footnotesize\ttfamily typedef char board\+\_\+t\mbox{[}8\mbox{]}\mbox{[}8\mbox{]}}
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{chess_8h_ad6d45c36f00102ebfdb45f9098979d69}\label{chess_8h_ad6d45c36f00102ebfdb45f9098979d69}} 
+\index{chess.h@{chess.h}!letter\_t@{letter\_t}}
+\index{letter\_t@{letter\_t}!chess.h@{chess.h}}
+\doxysubsubsection{\texorpdfstring{letter\_t}{letter\_t}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69}{letter\+\_\+t}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{A@{A}!chess.h@{chess.h}}\index{chess.h@{chess.h}!A@{A}}}\mbox{\Hypertarget{chess_8h_ad6d45c36f00102ebfdb45f9098979d69a42a4ade1acd55a49164099104990e09f}\label{chess_8h_ad6d45c36f00102ebfdb45f9098979d69a42a4ade1acd55a49164099104990e09f}} 
+A&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{B@{B}!chess.h@{chess.h}}\index{chess.h@{chess.h}!B@{B}}}\mbox{\Hypertarget{chess_8h_ad6d45c36f00102ebfdb45f9098979d69a3f2a77ecd272aa6d6b5902faa5e5fc68}\label{chess_8h_ad6d45c36f00102ebfdb45f9098979d69a3f2a77ecd272aa6d6b5902faa5e5fc68}} 
+B&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{C@{C}!chess.h@{chess.h}}\index{chess.h@{chess.h}!C@{C}}}\mbox{\Hypertarget{chess_8h_ad6d45c36f00102ebfdb45f9098979d69a739ce3f516592d245d16fd8a3893472c}\label{chess_8h_ad6d45c36f00102ebfdb45f9098979d69a739ce3f516592d245d16fd8a3893472c}} 
+C&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{D@{D}!chess.h@{chess.h}}\index{chess.h@{chess.h}!D@{D}}}\mbox{\Hypertarget{chess_8h_ad6d45c36f00102ebfdb45f9098979d69a77a6b11f9898c052926f1d49765861e8}\label{chess_8h_ad6d45c36f00102ebfdb45f9098979d69a77a6b11f9898c052926f1d49765861e8}} 
+D&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{E@{E}!chess.h@{chess.h}}\index{chess.h@{chess.h}!E@{E}}}\mbox{\Hypertarget{chess_8h_ad6d45c36f00102ebfdb45f9098979d69ab199e021998d49b1f09338d8b9b18ecb}\label{chess_8h_ad6d45c36f00102ebfdb45f9098979d69ab199e021998d49b1f09338d8b9b18ecb}} 
+E&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F@{F}!chess.h@{chess.h}}\index{chess.h@{chess.h}!F@{F}}}\mbox{\Hypertarget{chess_8h_ad6d45c36f00102ebfdb45f9098979d69af382a63cc3d6491bf26b59e66f46826d}\label{chess_8h_ad6d45c36f00102ebfdb45f9098979d69af382a63cc3d6491bf26b59e66f46826d}} 
+F&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{G@{G}!chess.h@{chess.h}}\index{chess.h@{chess.h}!G@{G}}}\mbox{\Hypertarget{chess_8h_ad6d45c36f00102ebfdb45f9098979d69a2fe993340f6abb2234e543cd427df70b}\label{chess_8h_ad6d45c36f00102ebfdb45f9098979d69a2fe993340f6abb2234e543cd427df70b}} 
+G&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{H@{H}!chess.h@{chess.h}}\index{chess.h@{chess.h}!H@{H}}}\mbox{\Hypertarget{chess_8h_ad6d45c36f00102ebfdb45f9098979d69a5008b1179f399a2273fd3f6a7fc3b292}\label{chess_8h_ad6d45c36f00102ebfdb45f9098979d69a5008b1179f399a2273fd3f6a7fc3b292}} 
+H&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{chess_8h_a049445f8ca6e7d0daf13a256e4375576}\label{chess_8h_a049445f8ca6e7d0daf13a256e4375576}} 
+\index{chess.h@{chess.h}!move\_type\_t@{move\_type\_t}}
+\index{move\_type\_t@{move\_type\_t}!chess.h@{chess.h}}
+\doxysubsubsection{\texorpdfstring{move\_type\_t}{move\_type\_t}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{chess_8h_a049445f8ca6e7d0daf13a256e4375576}{move\+\_\+type\+\_\+t}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INVALID\_MOVE@{INVALID\_MOVE}!chess.h@{chess.h}}\index{chess.h@{chess.h}!INVALID\_MOVE@{INVALID\_MOVE}}}\mbox{\Hypertarget{chess_8h_a049445f8ca6e7d0daf13a256e4375576a68ae46961ef72ccd7607aa0c27073f5e}\label{chess_8h_a049445f8ca6e7d0daf13a256e4375576a68ae46961ef72ccd7607aa0c27073f5e}} 
+INVALID\+\_\+\+MOVE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LONG\_CASTLE@{LONG\_CASTLE}!chess.h@{chess.h}}\index{chess.h@{chess.h}!LONG\_CASTLE@{LONG\_CASTLE}}}\mbox{\Hypertarget{chess_8h_a049445f8ca6e7d0daf13a256e4375576a1c070fe78533f520bfd2d76d43d84d62}\label{chess_8h_a049445f8ca6e7d0daf13a256e4375576a1c070fe78533f520bfd2d76d43d84d62}} 
+LONG\+\_\+\+CASTLE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SHORT\_CASTLE@{SHORT\_CASTLE}!chess.h@{chess.h}}\index{chess.h@{chess.h}!SHORT\_CASTLE@{SHORT\_CASTLE}}}\mbox{\Hypertarget{chess_8h_a049445f8ca6e7d0daf13a256e4375576a8a86f2556d13fc139782db4095654708}\label{chess_8h_a049445f8ca6e7d0daf13a256e4375576a8a86f2556d13fc139782db4095654708}} 
+SHORT\+\_\+\+CASTLE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{KNIGHT\_MOVE@{KNIGHT\_MOVE}!chess.h@{chess.h}}\index{chess.h@{chess.h}!KNIGHT\_MOVE@{KNIGHT\_MOVE}}}\mbox{\Hypertarget{chess_8h_a049445f8ca6e7d0daf13a256e4375576a5942252175888ef4a3f09c2be66defa2}\label{chess_8h_a049445f8ca6e7d0daf13a256e4375576a5942252175888ef4a3f09c2be66defa2}} 
+KNIGHT\+\_\+\+MOVE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BISHOP\_MOVE@{BISHOP\_MOVE}!chess.h@{chess.h}}\index{chess.h@{chess.h}!BISHOP\_MOVE@{BISHOP\_MOVE}}}\mbox{\Hypertarget{chess_8h_a049445f8ca6e7d0daf13a256e4375576aaf5ff9df8934648ed0086bcbf81736a8}\label{chess_8h_a049445f8ca6e7d0daf13a256e4375576aaf5ff9df8934648ed0086bcbf81736a8}} 
+BISHOP\+\_\+\+MOVE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ROOK\_MOVE@{ROOK\_MOVE}!chess.h@{chess.h}}\index{chess.h@{chess.h}!ROOK\_MOVE@{ROOK\_MOVE}}}\mbox{\Hypertarget{chess_8h_a049445f8ca6e7d0daf13a256e4375576a507b4ec2cb8fff84669fe03dc8b8c55b}\label{chess_8h_a049445f8ca6e7d0daf13a256e4375576a507b4ec2cb8fff84669fe03dc8b8c55b}} 
+ROOK\+\_\+\+MOVE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{QUEEN\_MOVE@{QUEEN\_MOVE}!chess.h@{chess.h}}\index{chess.h@{chess.h}!QUEEN\_MOVE@{QUEEN\_MOVE}}}\mbox{\Hypertarget{chess_8h_a049445f8ca6e7d0daf13a256e4375576a0b47c157882dd4ad3bd0211d616b9b89}\label{chess_8h_a049445f8ca6e7d0daf13a256e4375576a0b47c157882dd4ad3bd0211d616b9b89}} 
+QUEEN\+\_\+\+MOVE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{KING\_MOVE@{KING\_MOVE}!chess.h@{chess.h}}\index{chess.h@{chess.h}!KING\_MOVE@{KING\_MOVE}}}\mbox{\Hypertarget{chess_8h_a049445f8ca6e7d0daf13a256e4375576abb161b4e2d956997598a4d9e90454d83}\label{chess_8h_a049445f8ca6e7d0daf13a256e4375576abb161b4e2d956997598a4d9e90454d83}} 
+KING\+\_\+\+MOVE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PAWN\_MOVE@{PAWN\_MOVE}!chess.h@{chess.h}}\index{chess.h@{chess.h}!PAWN\_MOVE@{PAWN\_MOVE}}}\mbox{\Hypertarget{chess_8h_a049445f8ca6e7d0daf13a256e4375576a5d00251449c01f57c239776258d7fd27}\label{chess_8h_a049445f8ca6e7d0daf13a256e4375576a5d00251449c01f57c239776258d7fd27}} 
+PAWN\+\_\+\+MOVE&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{chess_8h_a83ed93787159888ad0378ebb177d9763}\label{chess_8h_a83ed93787159888ad0378ebb177d9763}} 
+\index{chess.h@{chess.h}!side\_t@{side\_t}}
+\index{side\_t@{side\_t}!chess.h@{chess.h}}
+\doxysubsubsection{\texorpdfstring{side\_t}{side\_t}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763}{side\+\_\+t}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BLACK@{BLACK}!chess.h@{chess.h}}\index{chess.h@{chess.h}!BLACK@{BLACK}}}\mbox{\Hypertarget{chess_8h_a83ed93787159888ad0378ebb177d9763af77fb67151d0c18d397069ad8c271ba3}\label{chess_8h_a83ed93787159888ad0378ebb177d9763af77fb67151d0c18d397069ad8c271ba3}} 
+BLACK&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WHITE@{WHITE}!chess.h@{chess.h}}\index{chess.h@{chess.h}!WHITE@{WHITE}}}\mbox{\Hypertarget{chess_8h_a83ed93787159888ad0378ebb177d9763a283fc479650da98250635b9c3c0e7e50}\label{chess_8h_a83ed93787159888ad0378ebb177d9763a283fc479650da98250635b9c3c0e7e50}} 
+WHITE&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{chess_8h_abedc1e50534a71ba314ff5a102daf2f1}\label{chess_8h_abedc1e50534a71ba314ff5a102daf2f1}} 
+\index{chess.h@{chess.h}!\_getCheckStatus@{\_getCheckStatus}}
+\index{\_getCheckStatus@{\_getCheckStatus}!chess.h@{chess.h}}
+\doxysubsubsection{\texorpdfstring{\_getCheckStatus()}{\_getCheckStatus()}}
+{\footnotesize\ttfamily int \+\_\+get\+Check\+Status (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}}}]{b }\end{DoxyParamCaption})}
+
+Return 0 if not in check Return 1 if in check Return 2 if in checkmate \mbox{\Hypertarget{chess_8h_ad033719299a4cfee7cb6b6ae14a39382}\label{chess_8h_ad033719299a4cfee7cb6b6ae14a39382}} 
+\index{chess.h@{chess.h}!\_getPieceAt@{\_getPieceAt}}
+\index{\_getPieceAt@{\_getPieceAt}!chess.h@{chess.h}}
+\doxysubsubsection{\texorpdfstring{\_getPieceAt()}{\_getPieceAt()}}
+{\footnotesize\ttfamily char \+\_\+get\+Piece\+At (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}}}]{b,  }\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})}
+
+Return piece at x, y in the board array \mbox{\Hypertarget{chess_8h_afeb0b00844629d6e7e1612c566d89d7c}\label{chess_8h_afeb0b00844629d6e7e1612c566d89d7c}} 
+\index{chess.h@{chess.h}!\_initializePieceMap@{\_initializePieceMap}}
+\index{\_initializePieceMap@{\_initializePieceMap}!chess.h@{chess.h}}
+\doxysubsubsection{\texorpdfstring{\_initializePieceMap()}{\_initializePieceMap()}}
+{\footnotesize\ttfamily void \+\_\+initialize\+Piece\+Map (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Sets up piece map to get move\+\_\+type\+\_\+t from char \mbox{\Hypertarget{chess_8h_ad755310e7b8cfe221c9ecd9cf1b96ab8}\label{chess_8h_ad755310e7b8cfe221c9ecd9cf1b96ab8}} 
+\index{chess.h@{chess.h}!\_isValidMove@{\_isValidMove}}
+\index{\_isValidMove@{\_isValidMove}!chess.h@{chess.h}}
+\doxysubsubsection{\texorpdfstring{\_isValidMove()}{\_isValidMove()}}
+{\footnotesize\ttfamily int \+\_\+is\+Valid\+Move (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}}}]{b,  }\item[{int}]{i,  }\item[{int}]{j,  }\item[{int}]{x,  }\item[{int}]{y,  }\item[{\mbox{\hyperlink{chess_8h_a049445f8ca6e7d0daf13a256e4375576}{move\+\_\+type\+\_\+t}}}]{move\+\_\+type,  }\item[{\mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763}{side\+\_\+t}}}]{side }\end{DoxyParamCaption})}
+
+Return 1 if move is valid 0 if move is invalid \mbox{\Hypertarget{chess_8h_ab2291666e94df9f39785386251b20258}\label{chess_8h_ab2291666e94df9f39785386251b20258}} 
+\index{chess.h@{chess.h}!\_move@{\_move}}
+\index{\_move@{\_move}!chess.h@{chess.h}}
+\doxysubsubsection{\texorpdfstring{\_move()}{\_move()}}
+{\footnotesize\ttfamily char \+\_\+move (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}}}]{b,  }\item[{int}]{i,  }\item[{int}]{j,  }\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})}
+
+Helper move function that works with array coords instead of chess notation. \mbox{\Hypertarget{chess_8h_a21eb0df001e76b49a5f980a2b71e6f98}\label{chess_8h_a21eb0df001e76b49a5f980a2b71e6f98}} 
+\index{chess.h@{chess.h}!\_parseChessNotation@{\_parseChessNotation}}
+\index{\_parseChessNotation@{\_parseChessNotation}!chess.h@{chess.h}}
+\doxysubsubsection{\texorpdfstring{\_parseChessNotation()}{\_parseChessNotation()}}
+{\footnotesize\ttfamily int \+\_\+parse\+Chess\+Notation (\begin{DoxyParamCaption}\item[{char $\ast$}]{str,  }\item[{int $\ast$}]{x\+\_\+i,  }\item[{int $\ast$}]{y\+\_\+i,  }\item[{int $\ast$}]{x\+\_\+f,  }\item[{int $\ast$}]{y\+\_\+f,  }\item[{\mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763}{side\+\_\+t}}}]{side }\end{DoxyParamCaption})}
+
+Returns the type of the move and both start and end points Only format checking occurs in this function. Invalid moves are checke later. \mbox{\Hypertarget{chess_8h_addb8a3591f34b67465f29b29534edbcd}\label{chess_8h_addb8a3591f34b67465f29b29534edbcd}} 
+\index{chess.h@{chess.h}!\_removePiece@{\_removePiece}}
+\index{\_removePiece@{\_removePiece}!chess.h@{chess.h}}
+\doxysubsubsection{\texorpdfstring{\_removePiece()}{\_removePiece()}}
+{\footnotesize\ttfamily char \+\_\+remove\+Piece (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Remove a piece Returns the piece type \mbox{\Hypertarget{chess_8h_afad52d212f6c888a3f0c08b7337817e3}\label{chess_8h_afad52d212f6c888a3f0c08b7337817e3}} 
+\index{chess.h@{chess.h}!getPieceAt@{getPieceAt}}
+\index{getPieceAt@{getPieceAt}!chess.h@{chess.h}}
+\doxysubsubsection{\texorpdfstring{getPieceAt()}{getPieceAt()}}
+{\footnotesize\ttfamily char get\+Piece\+At (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}}}]{b,  }\item[{\mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69}{letter\+\_\+t}}}]{y,  }\item[{int}]{x }\end{DoxyParamCaption})}
+
+Gets piece at letter, num value. \mbox{\Hypertarget{chess_8h_af252174d79f7b68a589d837b6d3db2f7}\label{chess_8h_af252174d79f7b68a589d837b6d3db2f7}} 
+\index{chess.h@{chess.h}!move@{move}}
+\index{move@{move}!chess.h@{chess.h}}
+\doxysubsubsection{\texorpdfstring{move()}{move()}}
+{\footnotesize\ttfamily int move (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}}}]{b,  }\item[{char $\ast$}]{str,  }\item[{int $\ast$}]{check\+\_\+status,  }\item[{\mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763}{side\+\_\+t}}}]{side }\end{DoxyParamCaption})}
+
+Move a piece to the destination
+
+
+\begin{DoxyParams}{Parameters}
+{\em board} & Current board \\
+\hline
+{\em str} & Chess notation for the current move \\
+\hline
+{\em check\+\_\+status} & Assigned status check value \\
+\hline
+{\em side} & WHITE of BLACK \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{chess_8h_a1a7b97ef3fb83092c96fbdf5a0237904}\label{chess_8h_a1a7b97ef3fb83092c96fbdf5a0237904}} 
+\index{chess.h@{chess.h}!printBoard@{printBoard}}
+\index{printBoard@{printBoard}!chess.h@{chess.h}}
+\doxysubsubsection{\texorpdfstring{printBoard()}{printBoard()}}
+{\footnotesize\ttfamily void print\+Board (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}}}]{b,  }\item[{\mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763}{side\+\_\+t}}}]{s }\end{DoxyParamCaption})}
+
+Interface functions (Exclusive to testing) Print out a pretty version of the board \mbox{\Hypertarget{chess_8h_a7eb6d3c7111aa244ff5bcce98807a7d4}\label{chess_8h_a7eb6d3c7111aa244ff5bcce98807a7d4}} 
+\index{chess.h@{chess.h}!resetBoard@{resetBoard}}
+\index{resetBoard@{resetBoard}!chess.h@{chess.h}}
+\doxysubsubsection{\texorpdfstring{resetBoard()}{resetBoard()}}
+{\footnotesize\ttfamily void reset\+Board (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}}}]{board }\end{DoxyParamCaption})}
+
+Sets board to default state
+
+
+\begin{DoxyParams}{Parameters}
+{\em board} & Current board \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{chess_8h_ad75ce87e446cf4ccc93832d5cbfeb4f8}\label{chess_8h_ad75ce87e446cf4ccc93832d5cbfeb4f8}} 
+\index{chess.h@{chess.h}!setPieceAt@{setPieceAt}}
+\index{setPieceAt@{setPieceAt}!chess.h@{chess.h}}
+\doxysubsubsection{\texorpdfstring{setPieceAt()}{setPieceAt()}}
+{\footnotesize\ttfamily char set\+Piece\+At (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}}}]{b,  }\item[{\mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69}{letter\+\_\+t}}}]{y,  }\item[{int}]{x,  }\item[{char}]{value }\end{DoxyParamCaption})}
+
+
+
+Sets piece at letter, num to value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & The first integer. \\
+\hline
+{\em b} & The second integer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the previous value at said location 
+\end{DoxyReturn}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{chess_8h_a3b64828afb6c464bd49051f111bd9f64}\label{chess_8h_a3b64828afb6c464bd49051f111bd9f64}} 
+\index{chess.h@{chess.h}!piece\_map@{piece\_map}}
+\index{piece\_map@{piece\_map}!chess.h@{chess.h}}
+\doxysubsubsection{\texorpdfstring{piece\_map}{piece\_map}}
+{\footnotesize\ttfamily int piece\+\_\+map\mbox{[}256\mbox{]}\hspace{0.3cm}{\ttfamily [extern]}}
+

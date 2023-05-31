@@ -1,0 +1,153 @@
+\hypertarget{chess_8c}{}\doxysection{/home/mahan/\+UMNChess\+Champs/chess/client/src/chess.c File Reference}
+\label{chess_8c}\index{/home/mahan/UMNChessChamps/chess/client/src/chess.c@{/home/mahan/UMNChessChamps/chess/client/src/chess.c}}
+{\ttfamily \#include \char`\"{}chess.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$wchar.\+h$>$}\newline
+{\ttfamily \#include $<$locale.\+h$>$}\newline
+{\ttfamily \#include $<$ctype.\+h$>$}\newline
+Include dependency graph for chess.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{chess_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{chess_8c_afeb0b00844629d6e7e1612c566d89d7c}{\+\_\+initialize\+Piece\+Map}} ()
+\item 
+void \mbox{\hyperlink{chess_8c_a7eb6d3c7111aa244ff5bcce98807a7d4}{reset\+Board}} (\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}} board)
+\item 
+void \mbox{\hyperlink{chess_8c_a1d139790ec9cb843274b3cfa4d78ad6d}{print\+Board}} (\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}} board, \mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763}{side\+\_\+t}} side)
+\item 
+char \mbox{\hyperlink{chess_8c_ab2291666e94df9f39785386251b20258}{\+\_\+move}} (\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}} b, int i, int j, int x, int y)
+\item 
+char \mbox{\hyperlink{chess_8c_adac1d0327dce4fcde245de391efe9eda}{\+\_\+remove\+Piece}} (\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}} b, int i, int j)
+\item 
+char \mbox{\hyperlink{chess_8c_a7b43d34074dce48e89f7986a06c501d2}{\+\_\+get\+Piece\+At}} (\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}} b, \mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69}{letter\+\_\+t}} y, int x)
+\item 
+char \mbox{\hyperlink{chess_8c_a836e8f336d8a8af1510e36cd8ca13f75}{\+\_\+set\+Piece\+At}} (\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}} b, \mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69}{letter\+\_\+t}} y, int x, char value)
+\item 
+int \mbox{\hyperlink{chess_8c_a6c11ed25952f4092c8f4b72651c94d67}{\+\_\+is\+Valid\+Move}} (\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}} b, int x\+\_\+i, \mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69}{letter\+\_\+t}} y\+\_\+i, int x\+\_\+f, \mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69}{letter\+\_\+t}} y\+\_\+f, \mbox{\hyperlink{chess_8h_a049445f8ca6e7d0daf13a256e4375576}{move\+\_\+type\+\_\+t}} move\+\_\+type, \mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763}{side\+\_\+t}} side)
+\item 
+int \mbox{\hyperlink{chess_8c_a21eb0df001e76b49a5f980a2b71e6f98}{\+\_\+parse\+Chess\+Notation}} (char $\ast$str, int $\ast$x\+\_\+i, int $\ast$y\+\_\+i, int $\ast$x\+\_\+f, int $\ast$y\+\_\+f, \mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763}{side\+\_\+t}} side)
+\item 
+int \mbox{\hyperlink{chess_8c_af0c25a16210d4a365c2469a21b025ef1}{\+\_\+checks}} (\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}} b, int move\+\_\+type, int x, int y, \mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763}{side\+\_\+t}} side)
+\item 
+int \mbox{\hyperlink{chess_8c_abedc1e50534a71ba314ff5a102daf2f1}{\+\_\+get\+Check\+Status}} (\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}} b)
+\item 
+int \mbox{\hyperlink{chess_8c_a9ab637d6dafd00b2e73828a1c2a0f991}{move}} (\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}} b, char $\ast$str, int $\ast$checkstatus, \mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763}{side\+\_\+t}} side)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{chess_8c_a3b64828afb6c464bd49051f111bd9f64}{piece\+\_\+map}} \mbox{[}256\mbox{]} = \{0\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{chess_8c_af0c25a16210d4a365c2469a21b025ef1}\label{chess_8c_af0c25a16210d4a365c2469a21b025ef1}} 
+\index{chess.c@{chess.c}!\_checks@{\_checks}}
+\index{\_checks@{\_checks}!chess.c@{chess.c}}
+\doxysubsubsection{\texorpdfstring{\_checks()}{\_checks()}}
+{\footnotesize\ttfamily int \+\_\+checks (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}}}]{b,  }\item[{int}]{move\+\_\+type,  }\item[{int}]{x,  }\item[{int}]{y,  }\item[{\mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763}{side\+\_\+t}}}]{side }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{chess_8c_abedc1e50534a71ba314ff5a102daf2f1}\label{chess_8c_abedc1e50534a71ba314ff5a102daf2f1}} 
+\index{chess.c@{chess.c}!\_getCheckStatus@{\_getCheckStatus}}
+\index{\_getCheckStatus@{\_getCheckStatus}!chess.c@{chess.c}}
+\doxysubsubsection{\texorpdfstring{\_getCheckStatus()}{\_getCheckStatus()}}
+{\footnotesize\ttfamily int \+\_\+get\+Check\+Status (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}}}]{b }\end{DoxyParamCaption})}
+
+Return 0 if not in check Return 1 if in check Return 2 if in checkmate \mbox{\Hypertarget{chess_8c_a7b43d34074dce48e89f7986a06c501d2}\label{chess_8c_a7b43d34074dce48e89f7986a06c501d2}} 
+\index{chess.c@{chess.c}!\_getPieceAt@{\_getPieceAt}}
+\index{\_getPieceAt@{\_getPieceAt}!chess.c@{chess.c}}
+\doxysubsubsection{\texorpdfstring{\_getPieceAt()}{\_getPieceAt()}}
+{\footnotesize\ttfamily char \+\_\+get\+Piece\+At (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}}}]{b,  }\item[{\mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69}{letter\+\_\+t}}}]{y,  }\item[{int}]{x }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{chess_8c_afeb0b00844629d6e7e1612c566d89d7c}\label{chess_8c_afeb0b00844629d6e7e1612c566d89d7c}} 
+\index{chess.c@{chess.c}!\_initializePieceMap@{\_initializePieceMap}}
+\index{\_initializePieceMap@{\_initializePieceMap}!chess.c@{chess.c}}
+\doxysubsubsection{\texorpdfstring{\_initializePieceMap()}{\_initializePieceMap()}}
+{\footnotesize\ttfamily void \+\_\+initialize\+Piece\+Map (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Sets up piece map to get move\+\_\+type\+\_\+t from char \mbox{\Hypertarget{chess_8c_a6c11ed25952f4092c8f4b72651c94d67}\label{chess_8c_a6c11ed25952f4092c8f4b72651c94d67}} 
+\index{chess.c@{chess.c}!\_isValidMove@{\_isValidMove}}
+\index{\_isValidMove@{\_isValidMove}!chess.c@{chess.c}}
+\doxysubsubsection{\texorpdfstring{\_isValidMove()}{\_isValidMove()}}
+{\footnotesize\ttfamily int \+\_\+is\+Valid\+Move (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}}}]{b,  }\item[{int}]{x\+\_\+i,  }\item[{\mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69}{letter\+\_\+t}}}]{y\+\_\+i,  }\item[{int}]{x\+\_\+f,  }\item[{\mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69}{letter\+\_\+t}}}]{y\+\_\+f,  }\item[{\mbox{\hyperlink{chess_8h_a049445f8ca6e7d0daf13a256e4375576}{move\+\_\+type\+\_\+t}}}]{move\+\_\+type,  }\item[{\mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763}{side\+\_\+t}}}]{side }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{chess_8c_ab2291666e94df9f39785386251b20258}\label{chess_8c_ab2291666e94df9f39785386251b20258}} 
+\index{chess.c@{chess.c}!\_move@{\_move}}
+\index{\_move@{\_move}!chess.c@{chess.c}}
+\doxysubsubsection{\texorpdfstring{\_move()}{\_move()}}
+{\footnotesize\ttfamily char \+\_\+move (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}}}]{b,  }\item[{int}]{i,  }\item[{int}]{j,  }\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})}
+
+Helper move function that works with array coords instead of chess notation. \mbox{\Hypertarget{chess_8c_a21eb0df001e76b49a5f980a2b71e6f98}\label{chess_8c_a21eb0df001e76b49a5f980a2b71e6f98}} 
+\index{chess.c@{chess.c}!\_parseChessNotation@{\_parseChessNotation}}
+\index{\_parseChessNotation@{\_parseChessNotation}!chess.c@{chess.c}}
+\doxysubsubsection{\texorpdfstring{\_parseChessNotation()}{\_parseChessNotation()}}
+{\footnotesize\ttfamily int \+\_\+parse\+Chess\+Notation (\begin{DoxyParamCaption}\item[{char $\ast$}]{str,  }\item[{int $\ast$}]{x\+\_\+i,  }\item[{int $\ast$}]{y\+\_\+i,  }\item[{int $\ast$}]{x\+\_\+f,  }\item[{int $\ast$}]{y\+\_\+f,  }\item[{\mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763}{side\+\_\+t}}}]{side }\end{DoxyParamCaption})}
+
+Returns the type of the move and both start and end points Only format checking occurs in this function. Invalid moves are checke later. \mbox{\Hypertarget{chess_8c_adac1d0327dce4fcde245de391efe9eda}\label{chess_8c_adac1d0327dce4fcde245de391efe9eda}} 
+\index{chess.c@{chess.c}!\_removePiece@{\_removePiece}}
+\index{\_removePiece@{\_removePiece}!chess.c@{chess.c}}
+\doxysubsubsection{\texorpdfstring{\_removePiece()}{\_removePiece()}}
+{\footnotesize\ttfamily char \+\_\+remove\+Piece (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}}}]{b,  }\item[{int}]{i,  }\item[{int}]{j }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{chess_8c_a836e8f336d8a8af1510e36cd8ca13f75}\label{chess_8c_a836e8f336d8a8af1510e36cd8ca13f75}} 
+\index{chess.c@{chess.c}!\_setPieceAt@{\_setPieceAt}}
+\index{\_setPieceAt@{\_setPieceAt}!chess.c@{chess.c}}
+\doxysubsubsection{\texorpdfstring{\_setPieceAt()}{\_setPieceAt()}}
+{\footnotesize\ttfamily char \+\_\+set\+Piece\+At (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}}}]{b,  }\item[{\mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69}{letter\+\_\+t}}}]{y,  }\item[{int}]{x,  }\item[{char}]{value }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{chess_8c_a9ab637d6dafd00b2e73828a1c2a0f991}\label{chess_8c_a9ab637d6dafd00b2e73828a1c2a0f991}} 
+\index{chess.c@{chess.c}!move@{move}}
+\index{move@{move}!chess.c@{chess.c}}
+\doxysubsubsection{\texorpdfstring{move()}{move()}}
+{\footnotesize\ttfamily int move (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}}}]{b,  }\item[{char $\ast$}]{str,  }\item[{int $\ast$}]{check\+\_\+status,  }\item[{\mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763}{side\+\_\+t}}}]{side }\end{DoxyParamCaption})}
+
+Move a piece to the destination
+
+
+\begin{DoxyParams}{Parameters}
+{\em board} & Current board \\
+\hline
+{\em str} & Chess notation for the current move \\
+\hline
+{\em check\+\_\+status} & Assigned status check value \\
+\hline
+{\em side} & WHITE of BLACK \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{chess_8c_a1d139790ec9cb843274b3cfa4d78ad6d}\label{chess_8c_a1d139790ec9cb843274b3cfa4d78ad6d}} 
+\index{chess.c@{chess.c}!printBoard@{printBoard}}
+\index{printBoard@{printBoard}!chess.c@{chess.c}}
+\doxysubsubsection{\texorpdfstring{printBoard()}{printBoard()}}
+{\footnotesize\ttfamily void print\+Board (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}}}]{b,  }\item[{\mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763}{side\+\_\+t}}}]{s }\end{DoxyParamCaption})}
+
+Interface functions (Exclusive to testing) Print out a pretty version of the board \mbox{\Hypertarget{chess_8c_a7eb6d3c7111aa244ff5bcce98807a7d4}\label{chess_8c_a7eb6d3c7111aa244ff5bcce98807a7d4}} 
+\index{chess.c@{chess.c}!resetBoard@{resetBoard}}
+\index{resetBoard@{resetBoard}!chess.c@{chess.c}}
+\doxysubsubsection{\texorpdfstring{resetBoard()}{resetBoard()}}
+{\footnotesize\ttfamily void reset\+Board (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\+\_\+t}}}]{board }\end{DoxyParamCaption})}
+
+Sets board to default state
+
+
+\begin{DoxyParams}{Parameters}
+{\em board} & Current board \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{chess_8c_a3b64828afb6c464bd49051f111bd9f64}\label{chess_8c_a3b64828afb6c464bd49051f111bd9f64}} 
+\index{chess.c@{chess.c}!piece\_map@{piece\_map}}
+\index{piece\_map@{piece\_map}!chess.c@{chess.c}}
+\doxysubsubsection{\texorpdfstring{piece\_map}{piece\_map}}
+{\footnotesize\ttfamily int piece\+\_\+map\mbox{[}256\mbox{]} = \{0\}}
+

@@ -1,18 +1,6 @@
 #ifndef CHESS_H
 #define CHESS_H
 
-/*
-#define INVALID_MOVE 0
-#define LONG_CASTLE 1
-#define SHORT_CASTLE 2
-#define KNIGHT_MOVE 3
-#define BISHOP_MOVE 4
-#define ROOK_MOVE 5
-#define QUEEN_MOVE 6
-#define KING_MOVE 7
-#define PAWN_MOVE 8
-*/
-
 typedef char board_t[8][8];
 extern int piece_map[256];
 
@@ -39,55 +27,87 @@ typedef enum {
 
 typedef enum {A,B,C,D,E,F,G,H} letter_t;
 
-// Gets piece at letter, num value.
-char getPieceAt(board_t b, letter_t y, int x);
+/**
+ * Gets piece at letter, num value.
+ */
+char getPieceAt(board_t b, letter_t x, int y);
 
-// Sets piece at letter, num to value. 
-// Returns the previous value at said location
-char setPieceAt(board_t b, letter_t y, int x, char value);
+/**
+ * \brief Sets piece at letter, num to value. 
+ * \param a The first integer.
+ * \param b The second integer.
+ * \return Returns the previous value at said location
+ */
+char setPieceAt(board_t b, letter_t x, int y, char value);
 
 
-
-
-// Sets up piece map to get move_type_t from char
+/**
+ * Sets up piece map to get move_type_t from char
+ */
 void _initializePieceMap();
 
-// Sets board to default state
-void resetBoard(board_t b);
+/**
+ * Sets board to default state
+ * 
+ * @param board Current board
+ */
+void resetBoard(board_t board);
 
-// Move a piece to the destination
-int move(board_t b, char * str, int * checkStatus, side_t side);
+/**
+ * Move a piece to the destination
+ *
+ * @param board Current board
+ * @param str Chess notation for the current move
+ * @param check_status Assigned status check value
+ * @param side WHITE of BLACK
+ */
+int move(board_t b, char * str, int * check_status, side_t side);
 
 
-/* Interface functions (Exclusive to testing) */
-// Print out a pretty version of the board
+/**
+ * Interface functions (Exclusive to testing)
+ * Print out a pretty version of the board
+ */
 void printBoard(board_t b, side_t s);
+
 
 // HELPER FUNCTIONS
 
-// Remove a piece
-// Returns the piece type
+/**
+ * Remove a piece
+ * Returns the piece type
+ */
 char _removePiece();
 
-// Returns the type of the move and both start and end points
-// Only format checking occurs in this function. Invalid moves are
-// checke later.
+/**
+ * Returns the type of the move and both start and end points
+ * Only format checking occurs in this function. Invalid moves are
+ * checke later.
+ */
 int _parseChessNotation(char * str, int * x_i, int * y_i, int * x_f, int * y_f, side_t side);
 
-// Helper move function that works with array coords
-// instead of chess notation.
+/**
+ * Helper move function that works with array coords
+ * instead of chess notation.
+ */
 char _move(board_t b, int i, int j, int x, int y);
 
-// Return piece at x, y in the board array
-char _getPieceAt(board_t b, int x, int y);
+/**
+ * Return piece at x, y in the board array
+ */
+//char _getPieceAt(board_t b, int x, int y);
 
-// Return 1 if move is valid
-// 		  0 if move is invalid
-int _isValidMove(board_t b, int i, int j, int x, int y, move_type_t move_type, side_t side);
+/**
+ * Return 1 if move is valid
+ * 		  0 if move is invalid
+ */
+int _isValidMove(board_t b, letter_t x_i, int y_i, letter_t x_f, int y_f, move_type_t move_type, side_t side);
 
-// Return 0 if not in check
-// Return 1 if in check
-// Return 2 if in checkmate
+/**
+ * Return 0 if not in check
+ * Return 1 if in check
+ * Return 2 if in checkmate
+ */
 int _getCheckStatus(board_t b);
 
 #endif

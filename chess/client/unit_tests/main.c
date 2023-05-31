@@ -14,6 +14,8 @@ int main(int argc, char ** argv)
 		cmocka_unit_test(test_parseChessNotation),
 		cmocka_unit_test(test__move),
 		cmocka_unit_test(test_isValidMove),
+		cmocka_unit_test(test__getPieceAt),
+		cmocka_unit_test(test__setPieceAt),
 		cmocka_unit_test(test__checks),
 		cmocka_unit_test(test_getCheckStatus),
 	};

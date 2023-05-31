@@ -122,21 +122,21 @@ char _removePiece(board_t b, int i, int j)
 	return temp;
 }
 
-char _getPieceAt(board_t b, letter_t y, int x)
+char _getPieceAt(board_t b, letter_t x, int y)
 {
-	int adjusted_x = x - 1;
-	return b[y - 7][adjusted_x];
+	int adjusted_y = 8-y;
+	return b[adjusted_y][x];
 }
 
-char _setPieceAt(board_t b, letter_t y, int x, char value)
+char _setPieceAt(board_t b, letter_t x, int y, char value)
 {
-	int adjusted_x = x - 1;
-	char ret_val = b[7 - y][adjusted_x];
-	b[y - 7][adjusted_x] = value;
+	int adjusted_y = 8-y;
+	char ret_val = b[adjusted_y][x];
+	b[adjusted_y][x] = value;
 	return  ret_val;
 }
 
-int _isValidMove(board_t b, int x_i, letter_t y_i, int x_f, letter_t y_f, move_type_t move_type, side_t side)
+int _isValidMove(board_t b, letter_t x_i, int y_i, letter_t x_f, int y_f, move_type_t move_type, side_t side)
 {
 	// Out of bounds?
 	if (x_i < 0 || x_i > 7 || 
@@ -469,9 +469,9 @@ int _checks(board_t b, int move_type, int x, int y, side_t side)
 	char expected_king;
 	if (side == WHITE)
 	{
-		expected_king = "K"; // Looking for black king 
+		expected_king = 'K'; // Looking for black king 
 	} else {
-		expected_king = "k"; // Looking for white king
+		expected_king = 'k'; // Looking for white king
 	}
 
 	if (move_type == KNIGHT_MOVE)
@@ -484,7 +484,11 @@ int _checks(board_t b, int move_type, int x, int y, side_t side)
 		    (b[(y - 2)][(x - 1)] == expected_king) ||
 		    (b[(y + 2)][(x + 1)] == expected_king) ||
 		    (b[(y - 2)][(x + 1)] == expected_king))
+		{
+
+		}
 	} else if (move_type == BISHOP_MOVE) {
+		/*
 		int dx = (x_f > x_i) ? 1 : -1;
 		int dy = (y_f > y_i) ? 1 : -1;
 
@@ -500,7 +504,9 @@ int _checks(board_t b, int move_type, int x, int y, side_t side)
 			x_i += dx;
 			y_i += dy;
 		}
+		*/
 	} else if (move_type == ROOK_MOVE) {
+		/*
 		int dx, dy;
 		if (x_f == x_i)
 		{
@@ -520,6 +526,7 @@ int _checks(board_t b, int move_type, int x, int y, side_t side)
 			}
 		
 		}
+		*/
 	} else if (move_type == SHORT_CASTLE) {
 
 	} else if (move_type == LONG_CASTLE) {
@@ -544,7 +551,7 @@ int _getCheckStatus(board_t b)
 		for (int x = 0; x < 8; x++) {
 			move_type_t move_type = piece_map[b[y][x]];
 			if (move_type != INVALID_MOVE) {
-				side = isupper(b[y][x]) ? BLACK : WHITE;
+				side_t side = isupper(b[y][x]) ? BLACK : WHITE;
 				if (_checks(b, move_type, y, x, side) == 1){
 					return 1;
 				}

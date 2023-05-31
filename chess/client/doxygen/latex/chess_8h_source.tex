@@ -1,0 +1,65 @@
+\hypertarget{chess_8h_source}{}\doxysection{chess.\+h}
+\label{chess_8h_source}\index{/home/mahan/UMNChessChamps/chess/client/src/chess.h@{/home/mahan/UMNChessChamps/chess/client/src/chess.h}}
+\mbox{\hyperlink{chess_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef CHESS\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define CHESS\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{keyword}{typedef} \textcolor{keywordtype}{char} \mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\_t}}[8][8];}
+\DoxyCodeLine{5 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{chess_8h_a3b64828afb6c464bd49051f111bd9f64}{piece\_map}}[256];}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{comment}{// Used to differentiate between different views}}
+\DoxyCodeLine{8 \textcolor{comment}{// By default to board is in white notation but I}}
+\DoxyCodeLine{9 \textcolor{comment}{// doubt black wants to look at their pieces from}}
+\DoxyCodeLine{10 \textcolor{comment}{// white's perspective.}}
+\DoxyCodeLine{11 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \{}
+\DoxyCodeLine{12     \mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763af77fb67151d0c18d397069ad8c271ba3}{BLACK}},}
+\DoxyCodeLine{13     \mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763a283fc479650da98250635b9c3c0e7e50}{WHITE}}}
+\DoxyCodeLine{14 \} \mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763}{side\_t}};}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \{}
+\DoxyCodeLine{17     \mbox{\hyperlink{chess_8h_a049445f8ca6e7d0daf13a256e4375576a68ae46961ef72ccd7607aa0c27073f5e}{INVALID\_MOVE}},}
+\DoxyCodeLine{18     \mbox{\hyperlink{chess_8h_a049445f8ca6e7d0daf13a256e4375576a1c070fe78533f520bfd2d76d43d84d62}{LONG\_CASTLE}},}
+\DoxyCodeLine{19     \mbox{\hyperlink{chess_8h_a049445f8ca6e7d0daf13a256e4375576a8a86f2556d13fc139782db4095654708}{SHORT\_CASTLE}},}
+\DoxyCodeLine{20     \mbox{\hyperlink{chess_8h_a049445f8ca6e7d0daf13a256e4375576a5942252175888ef4a3f09c2be66defa2}{KNIGHT\_MOVE}},}
+\DoxyCodeLine{21     \mbox{\hyperlink{chess_8h_a049445f8ca6e7d0daf13a256e4375576aaf5ff9df8934648ed0086bcbf81736a8}{BISHOP\_MOVE}},}
+\DoxyCodeLine{22     \mbox{\hyperlink{chess_8h_a049445f8ca6e7d0daf13a256e4375576a507b4ec2cb8fff84669fe03dc8b8c55b}{ROOK\_MOVE}},}
+\DoxyCodeLine{23     \mbox{\hyperlink{chess_8h_a049445f8ca6e7d0daf13a256e4375576a0b47c157882dd4ad3bd0211d616b9b89}{QUEEN\_MOVE}},}
+\DoxyCodeLine{24     \mbox{\hyperlink{chess_8h_a049445f8ca6e7d0daf13a256e4375576abb161b4e2d956997598a4d9e90454d83}{KING\_MOVE}},}
+\DoxyCodeLine{25     \mbox{\hyperlink{chess_8h_a049445f8ca6e7d0daf13a256e4375576a5d00251449c01f57c239776258d7fd27}{PAWN\_MOVE}}}
+\DoxyCodeLine{26 \} \mbox{\hyperlink{chess_8h_a049445f8ca6e7d0daf13a256e4375576}{move\_type\_t}};}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \{\mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69a42a4ade1acd55a49164099104990e09f}{A}},\mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69a3f2a77ecd272aa6d6b5902faa5e5fc68}{B}},\mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69a739ce3f516592d245d16fd8a3893472c}{C}},\mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69a77a6b11f9898c052926f1d49765861e8}{D}},\mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69ab199e021998d49b1f09338d8b9b18ecb}{E}},\mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69af382a63cc3d6491bf26b59e66f46826d}{F}},\mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69a2fe993340f6abb2234e543cd427df70b}{G}},\mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69a5008b1179f399a2273fd3f6a7fc3b292}{H}}\} \mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69}{letter\_t}};}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{33 \textcolor{keywordtype}{char} \mbox{\hyperlink{chess_8h_afad52d212f6c888a3f0c08b7337817e3}{getPieceAt}}(\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\_t}} b, \mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69}{letter\_t}} y, \textcolor{keywordtype}{int} x);}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{41 \textcolor{keywordtype}{char} \mbox{\hyperlink{chess_8h_ad75ce87e446cf4ccc93832d5cbfeb4f8}{setPieceAt}}(\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\_t}} b, \mbox{\hyperlink{chess_8h_ad6d45c36f00102ebfdb45f9098979d69}{letter\_t}} y, \textcolor{keywordtype}{int} x, \textcolor{keywordtype}{char} value);}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43 }
+\DoxyCodeLine{47 \textcolor{keywordtype}{void} \mbox{\hyperlink{chess_8h_afeb0b00844629d6e7e1612c566d89d7c}{\_initializePieceMap}}();}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{54 \textcolor{keywordtype}{void} \mbox{\hyperlink{chess_8h_a7eb6d3c7111aa244ff5bcce98807a7d4}{resetBoard}}(\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\_t}} board);}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{64 \textcolor{keywordtype}{int} \mbox{\hyperlink{chess_8h_af252174d79f7b68a589d837b6d3db2f7}{move}}(\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\_t}} b, \textcolor{keywordtype}{char} * str, \textcolor{keywordtype}{int} * check\_status, \mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763}{side\_t}} side);}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66 }
+\DoxyCodeLine{71 \textcolor{keywordtype}{void} \mbox{\hyperlink{chess_8h_a1a7b97ef3fb83092c96fbdf5a0237904}{printBoard}}(\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\_t}} b, \mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763}{side\_t}} s);}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74 \textcolor{comment}{// HELPER FUNCTIONS}}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{80 \textcolor{keywordtype}{char} \mbox{\hyperlink{chess_8h_addb8a3591f34b67465f29b29534edbcd}{\_removePiece}}();}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{87 \textcolor{keywordtype}{int} \mbox{\hyperlink{chess_8h_a21eb0df001e76b49a5f980a2b71e6f98}{\_parseChessNotation}}(\textcolor{keywordtype}{char} * str, \textcolor{keywordtype}{int} * x\_i, \textcolor{keywordtype}{int} * y\_i, \textcolor{keywordtype}{int} * x\_f, \textcolor{keywordtype}{int} * y\_f, \mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763}{side\_t}} side);}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{93 \textcolor{keywordtype}{char} \mbox{\hyperlink{chess_8h_ab2291666e94df9f39785386251b20258}{\_move}}(\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\_t}} b, \textcolor{keywordtype}{int} i, \textcolor{keywordtype}{int} j, \textcolor{keywordtype}{int} x, \textcolor{keywordtype}{int} y);}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{98 \textcolor{keywordtype}{char} \mbox{\hyperlink{chess_8h_ad033719299a4cfee7cb6b6ae14a39382}{\_getPieceAt}}(\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\_t}} b, \textcolor{keywordtype}{int} x, \textcolor{keywordtype}{int} y);}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{104 \textcolor{keywordtype}{int} \mbox{\hyperlink{chess_8h_ad755310e7b8cfe221c9ecd9cf1b96ab8}{\_isValidMove}}(\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\_t}} b, \textcolor{keywordtype}{int} i, \textcolor{keywordtype}{int} j, \textcolor{keywordtype}{int} x, \textcolor{keywordtype}{int} y, \mbox{\hyperlink{chess_8h_a049445f8ca6e7d0daf13a256e4375576}{move\_type\_t}} move\_type, \mbox{\hyperlink{chess_8h_a83ed93787159888ad0378ebb177d9763}{side\_t}} side);}
+\DoxyCodeLine{105 }
+\DoxyCodeLine{111 \textcolor{keywordtype}{int} \mbox{\hyperlink{chess_8h_abedc1e50534a71ba314ff5a102daf2f1}{\_getCheckStatus}}(\mbox{\hyperlink{chess_8h_a7f52bec6a96d57716f9fcba1df8528dd}{board\_t}} b);}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
