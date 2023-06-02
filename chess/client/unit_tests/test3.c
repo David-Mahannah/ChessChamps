@@ -194,7 +194,6 @@ void test_isValidMove(void **state)
 			white_board[1][7] = ' ';
 		}
 
-		int move;
 		result = _isValidMove(white_board, rook_coordinates[i][0],
 						rook_coordinates[i][1],
 						rook_coordinates[i][2],

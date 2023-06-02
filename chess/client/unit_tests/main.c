@@ -18,6 +18,7 @@ int main(int argc, char ** argv)
 		cmocka_unit_test(test__setPieceAt),
 		cmocka_unit_test(test__checks),
 		cmocka_unit_test(test_getCheckStatus),
+		cmocka_unit_test(test__inCheckMate),
 	};
 
 	return cmocka_run_group_tests(tests, NULL, NULL);

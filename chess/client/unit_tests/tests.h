@@ -11,5 +11,6 @@ void test_getCheckStatus(void **state);
 void test__checks(void **state);
 void test__getPieceAt(void **state);
 void test__setPieceAt(void **state);
+void test__inCheckMate(void **state);
 
 #endif

@@ -54,6 +54,13 @@ void _initializePieceMap();
 void resetBoard(board_t board);
 
 /**
+ * Sets board to clear state
+ *
+ * @param board Current board
+ */
+void clearBoard(board_t board);
+
+/**
  * Move a piece to the destination
  *
  * @param board Current board
@@ -108,6 +115,15 @@ int _isValidMove(board_t b, letter_t x_i, int y_i, letter_t x_f, int y_f, move_t
  * Return 1 if in check
  * Return 2 if in checkmate
  */
-int _getCheckStatus(board_t b);
+int _getCheckStatus(board_t b, side_t side);
 
+
+/**
+ *
+ *
+ */
+int _checks(board_t b, move_type_t move_type, int x, int y, side_t side);
+
+
+int _inCheckMate(board_t b, side_t side);
 #endif

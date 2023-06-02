@@ -65,6 +65,18 @@ void resetBoard(board_t board)
     board[7][7] = 'r';
 }
 
+
+void clearBoard(board_t board)
+{
+    // Set up the empty squares
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            board[i][j] = ' ';
+        }
+    }
+}
+
+
 void printBoard(board_t board, side_t side)
 {
 	if (side == WHITE)
@@ -122,13 +134,13 @@ char _removePiece(board_t b, int i, int j)
 	return temp;
 }
 
-char _getPieceAt(board_t b, letter_t x, int y)
+char getPieceAt(board_t b, letter_t x, int y)
 {
 	int adjusted_y = 8-y;
 	return b[adjusted_y][x];
 }
 
-char _setPieceAt(board_t b, letter_t x, int y, char value)
+char setPieceAt(board_t b, letter_t x, int y, char value)
 {
 	int adjusted_y = 8-y;
 	char ret_val = b[adjusted_y][x];
@@ -464,7 +476,17 @@ int _parseChessNotation(char * str, int * x_i, int * y_i, int * x_f, int * y_f, 
 }
 
 
-int _checks(board_t b, int move_type, int x, int y, side_t side)
+int inBounds(int x, int y)
+{
+	if (x < 8 && x >= 0 && y < 8 && y >= 0)
+	{
+		return 1;
+	}
+	return 0;
+}
+
+
+int _checks(board_t b, move_type_t move_type, int x, int y, side_t side)
 {
 	char expected_king;
 	if (side == WHITE)
@@ -476,84 +498,246 @@ int _checks(board_t b, int move_type, int x, int y, side_t side)
 
 	if (move_type == KNIGHT_MOVE)
 	{
-		if ((b[(y - 1)][(x + 2)] == expected_king) ||
-		    (b[(y + 1)][(x + 2)] == expected_king) ||
-		    (b[(y - 1)][(x - 2)] == expected_king) ||
-		    (b[(y + 1)][(x - 2)] == expected_king) ||
-		    (b[(y + 2)][(x - 1)] == expected_king) ||
-		    (b[(y - 2)][(x - 1)] == expected_king) ||
-		    (b[(y + 2)][(x + 1)] == expected_king) ||
-		    (b[(y - 2)][(x + 1)] == expected_king))
+		if (
+			((b[y-1][x+2] == expected_king) && inBounds(x+2,y-1)) ||
+			((b[y+1][x+2] == expected_king) && inBounds(x+2,y+1)) ||
+			((b[y-1][x-2] == expected_king) && inBounds(x-2,y-1)) ||
+			((b[y+1][x-2] == expected_king) && inBounds(x-2,y+1)) ||
+			((b[y+2][x-1] == expected_king) && inBounds(x-1,y+2)) ||
+			((b[y-2][x-1] == expected_king) && inBounds(x-1,y-2)) ||
+			((b[y+2][x+1] == expected_king) && inBounds(x+1,y+2)) ||
+			((b[y-2][x+1] == expected_king) && inBounds(x+1,y-2))
+			)
 		{
-
+			return 1;
 		}
-	} else if (move_type == BISHOP_MOVE) {
-		/*
-		int dx = (x_f > x_i) ? 1 : -1;
-		int dy = (y_f > y_i) ? 1 : -1;
-
-		x_i += dx;
-		y_i += dy;
-		
-		do {
-			if (b[7-y_i][x_i] != ' ')
-			{
-				return 0;
-			}
-
-			x_i += dx;
-			y_i += dy;
-		}
-		*/
-	} else if (move_type == ROOK_MOVE) {
-		/*
+		return 0;
+	} 
+	else if (move_type == BISHOP_MOVE)
+	{
 		int dx, dy;
-		if (x_f == x_i)
+		int curr_x = x;
+		int curr_y = y;
+
+		int directions_x[4] = {-1, 1,-1, 1};
+		int directions_y[4] = {-1,-1, 1, 1};
+		for (int i = 0; i < 4; i++)
 		{
-			dy = (y_f > y_i) ? 1 : -1;
-			dx = 0;
-		} else if (y_f == y_i) {
-			dx = (y_f > x_i) ? 1 : -1;
-			dy = 0;
-		}
+			// Up left
+			dy = directions_y[i];
+			dx = directions_x[i];
+			do {
+				curr_x += dx;
+				curr_y += dy;
 
-		do {
-			x_i += dx;
-			y_i += dy;
-			if (b[7-y_i][x_i] != ' ')
+				if (b[curr_y][curr_x] == expected_king)
+				{
+					return 1;
+				}
+				if (b[curr_y][curr_x] != ' ')
+				{
+					break;
+				}
+			} while (inBounds(curr_x, curr_y));
+		}
+		return 0;
+	}
+	else if (move_type == ROOK_MOVE)
+	{
+		// Up
+		for (int i = y-1; i > 0; i--)
+		{
+			if (b[i][x] == expected_king)
 			{
-				return 0;
+				return 1;
 			}
-		
+			if (b[i][x] != ' ')
+			{
+				break;
+			}
 		}
-		*/
-	} else if (move_type == SHORT_CASTLE) {
+		
+		// Down
+		for (int i = y+1; i < 8; i++)
+		{
+			if (b[i][x] == expected_king)
+			{
+				return 1;
+			}
+			if (b[i][x] != ' ')
+			{
+				break;
+			}
+		}
 
-	} else if (move_type == LONG_CASTLE) {
+		// Left
+		for (int i = x-1; i > 0; i--)
+		{
+			if (b[y][i] == expected_king)
+			{
+				return 1;
+			}
+			if (b[y][i] != ' ')
+			{
+				break;
+			}
+		}
+
+		// Right
+		for (int i = x+1; i < 8; i++)
+		{
+			if (b[y][i] == expected_king)
+			{
+				return 1;
+			}
+			if (b[y][i] != ' ')
+			{
+				break;
+			}
+		}
+		// no king found => no check
+		return 0;
+	} else if (move_type == QUEEN_MOVE) {
+		int dx, dy;
+		int curr_x = x;
+		int curr_y = y;
+
+		int directions_x[4] = {-1, 1,-1, 1};
+		int directions_y[4] = {-1,-1, 1, 1};
+		for (int i = 0; i < 4; i++)
+		{
+			// Up left
+			dy = directions_y[i];
+			dx = directions_x[i];
+			do {
+				curr_x += dx;
+				curr_y += dy;
+
+				if (b[curr_y][curr_x] == expected_king)
+				{
+					return 1;
+				}
+				if (b[curr_y][curr_x] != ' ')
+				{
+					break;
+				}
+			} while (inBounds(curr_x, curr_y));
+		}
+		
+		// Up
+		for (int i = y-1; i > 0; i--)
+		{
+			if (b[i][x] == expected_king)
+			{
+				return 1;
+			}
+			if (b[i][x] != ' ')
+			{
+				break;
+			}
+		}
+		
+		// Down
+		for (int i = y+1; i < 8; i++)
+		{
+			if (b[i][x] == expected_king)
+			{
+				return 1;
+			}
+			if (b[i][x] != ' ')
+			{
+				break;
+			}
+		}
+
+		// Left
+		for (int i = x-1; i > 0; i--)
+		{
+			if (b[y][i] == expected_king)
+			{
+				return 1;
+			}
+			if (b[y][i] != ' ')
+			{
+				break;
+			}
+		}
+
+		// Right
+		for (int i = x+1; i < 8; i++)
+		{
+			if (b[y][i] == expected_king)
+			{
+				return 1;
+			}
+			if (b[y][i] != ' ')
+			{
+				break;
+			}
+		}
+		// no king found => no check
+		return 0;
 
 	} else if (move_type == PAWN_MOVE) {
-
-	} else if (move_type == KING_MOVE) {
-
+		if (side == WHITE)
+		{
+			if ((b[y-1][x-1] == 'K') ||
+				(b[y-1][x+1] == 'K'))
+			{
+				return 1;
+			}
+		}
+		else if (side == BLACK)
+		{
+			if ((b[y+1][x-1] == 'k') ||
+				(b[y+1][x+1] == 'k'))
+			{
+				return 1;
+			}
+		} else {
+			printf("Invalid color\n");
+			return -1; 
+		}	
 	} else {
 		printf("Invalid move type\n");
 		return -1;
 	}
-	return 1;
+	return 0;
 }
 
 
 
-int _getCheckStatus(board_t b)
+int _getCheckStatus(board_t b, side_t side)
 {
 	_initializePieceMap();
-	for (int y = 0; y < 8; y++) {
-		for (int x = 0; x < 8; x++) {
+
+	side_t other_side;
+
+	if (side == WHITE)
+	{
+		other_side = BLACK;
+	} else if (side == BLACK) {
+		other_side = WHITE;
+	} else {
+		printf("Invalid side\n");
+		return -1;
+	}
+
+	for (int y = 0; y < 8; y++)
+	{
+		for (int x = 0; x < 8; x++)
+		{
 			move_type_t move_type = piece_map[b[y][x]];
-			if (move_type != INVALID_MOVE) {
-				side_t side = isupper(b[y][x]) ? BLACK : WHITE;
-				if (_checks(b, move_type, y, x, side) == 1){
-					return 1;
+			if (move_type != INVALID_MOVE)
+			{
+				//side_t side = isupper(b[y][x]) ? BLACK : WHITE;
+				if (side == WHITE && isupper(b[y][x]) ||
+					side == BLACK && islower(b[y][x]))
+				{
+					if (_checks(b, move_type, x, y, other_side) == 1)
+					{
+						return 1;
+					}
 				}
 			}
 		}
@@ -561,7 +745,50 @@ int _getCheckStatus(board_t b)
 	return 0;
 }
 
-int move(board_t b, char * str, int * checkstatus, side_t side)
+int _inCheckMate(board_t b, side_t side)
+{
+	int y = 0;
+	int x = 0;
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			if ((b[i][j] == 'k' && side == WHITE) ||
+				(b[i][j] == 'K' && side == BLACK))
+				{
+					y = i;
+					x = j;
+				}
+		}
+	}
+
+	int x_s[8] = {-1, 0, 1,-1, 1,-1, 0, 1};
+	int y_s[8] = {-1,-1,-1, 0, 0, 1, 1, 1};
+
+	for (int i = 0; i < 8; i++)
+	{
+		if (_isValidMove(b, x, y+7, x+x_s[i], y+y_s[i]+7, KING_MOVE, side))
+		{
+			char prev = _move(b, x, y+7, x+x_s[i], y+y_s[i]+7); // Try move
+			if (_getCheckStatus(b, side) == 0)
+			{
+				// King has an exit route
+				_move(b, x+x_s[i], y+y_s[i]+7, x, y+7); // Move back
+				b[y+y_s[i]][x+x_s[i]] = prev;
+				return 0;
+			}
+			_move(b, x+x_s[i], y+y_s[i]+7, x, y+7); // Move back
+			b[y+y_s[i]+7][x+x_s[i]] = prev;
+		}
+	}
+	if (_getCheckStatus(b, side))
+	{
+		return 2; // Checkmate
+	}
+	return 1; // Stalemate
+}
+
+int move(board_t b, char * str, int * check_status, side_t side)
 {
 	int x_i, y_i, x_f, y_f;
 
@@ -572,10 +799,18 @@ int move(board_t b, char * str, int * checkstatus, side_t side)
 		return (char) 0;
 	}
 
+	side_t other_side;
+	if (side == WHITE) {
+		other_side = BLACK;
+	} else if (side == BLACK) {
+		other_side = WHITE;
+	}
 	char taken = _removePiece(b, x_f, y_f);
-	printf("removed peice: %c\n", taken);
 
+	printf("removed peice: %c\n", taken);
 	printf("Moving piece to %d, %d, %d, %d\n", x_i, y_i, x_f, y_f);
+	
+	int check_stat = _getCheckStatus(b, side);
 	
 	if (parsed_move == SHORT_CASTLE)
 	{
@@ -598,7 +833,17 @@ int move(board_t b, char * str, int * checkstatus, side_t side)
 	}
 
 	_move(b, x_i, y_i, x_f, y_f);
-	
-	int check_stat = _getCheckStatus(b);
+	// If after the move were still in check then its invalid
+	// This handles 2 cases:
+	// 	Still in check after last turn
+	//	Moved into check
+	if (_getCheckStatus(b, side) == 1)
+	{
+		_move(b, x_f, y_f, x_i, x_f);
+		return (char) 0;
+	}
+
+	check_stat = _getCheckStatus(b, other_side);
+	*check_status = check_stat;
 	return taken;
 }
