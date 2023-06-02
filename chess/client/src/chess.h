@@ -14,6 +14,11 @@ typedef enum {
 } side_t;
 
 typedef enum {
+	ALG,      // Algebraic
+	LNG_ALG,  // Long algebraic
+} chess_fmt_t;
+
+typedef enum {
 	INVALID_MOVE,
 	LONG_CASTLE,
 	SHORT_CASTLE,
@@ -24,6 +29,13 @@ typedef enum {
 	KING_MOVE,
 	PAWN_MOVE
 } move_type_t;
+
+typedef struct coord {
+	int x_i;
+	int y_i;
+	int x_f;
+	int y_f;
+} coord_t;
 
 typedef enum {A,B,C,D,E,F,G,H} letter_t;
 
@@ -93,6 +105,16 @@ char _removePiece();
  */
 int _parseChessNotation(char * str, int * x_i, int * y_i, int * x_f, int * y_f, side_t side);
 
+
+/**
+ *
+ *
+ *
+ */
+coord_t _parseChessNotation2(char * str, side_t side, chess_fmt_t format);
+
+
+
 /**
  * Helper move function that works with array coords
  * instead of chess notation.
@@ -124,6 +146,9 @@ int _getCheckStatus(board_t b, side_t side);
  */
 int _checks(board_t b, move_type_t move_type, int x, int y, side_t side);
 
-
+/**
+ *
+ *
+ */
 int _inCheckMate(board_t b, side_t side);
 #endif
