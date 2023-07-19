@@ -1,1 +1,1 @@
-# UMNChessChamps
+# ChessChamps
